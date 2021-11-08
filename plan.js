@@ -1,16 +1,44 @@
 //Non-hoisted class declarations declared in global scope for access later
 //+function gameInit () {loadMap(), populateItems()}
-let  = prompt.userInput
+// itemInit()
+// 
+//
+//
+
 class Room { 
-    constructor(roomExits, roomItems, roomDescription, roomLook) {
+    constructor(roomExits, roomItems, roomDescription, roomLook, roomCounter) {
     this.roomExits = roomExits;
     this.roomItems = roomItems;
     this.roomDescription = roomDescription;
     this.roomLook = roomLook;
+    this.roomCounter = 0;
 
     }
 }
-//ALL ROOMS
+//item class, work in progress
+class Items {
+    constructor(itemName, itemDescription) {
+    this.itemName = itemName,
+    this.itemDescription = itemDescription
+    }
+}
+
+class Book extends Items {
+    super() {}
+    constructor(pages, bookText) {
+        this.pages = pages,
+        this.bookText = bookText
+    }
+    //Was thinking of a static method, but remembered that this. would refer to the class rather than the object intended. Maybe I can bind or solve this in the function? Something whacky like moving book to player.hands, which can only have an array length of 1, and then referencing player.hands[0] inside the read function?
+}
+let dustyBook = new Items ('a dusty book', 'the front cover has been torn off, and the ink has faded')
+dustyBook = {
+    //books should have pages = num , and readBook() should bring up a modal z-indexed (above or before) userView. 
+    readBook() {
+        console.log('adding a function to class instance can work like this, but, as an aside, you really should consider making a book subclass')
+    }
+}
+// //ITEMS declared in global scope for testing
 let secretDoor = {
     isLocked: true,
     unlock() {
@@ -29,30 +57,47 @@ let turnkey = {
         
     }
 }
+//ITEMS SHOULD APPEAR IN LOOK() OR ROOM DESCRIPTION, AND DESCRIPTION AND LOOK SHOULD UPDATE TO NEW TEXT REFLECTING ITEMS ARE NOT THERE. 
+//Should I use a template literal to reference roomExits foor roomLook? Potential problem with declaration
+    let garden = new Room (['south'], [], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den.')
+    let den = new Room (['north', 'west'], [], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north.')
+    let greatRoom = new Room (['east', 'south'], [], 'you walk into the great room and your gaze immediately rises to the top of the cathedral ceilings, great beams of rough hewn timber spanning the apex of this immense-feeling room', 'A long, hardwood bartop occupies half the length of the western wall, behind which are shelves filled with spirits posessing indiscernable branding')
     let kitchen = new Room (['east'], [], 'kitchen', 'smells off')
     let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room', 'there is a bunch of stuff would you look at that now move on')
     console.log(Room)
     //this can be unlocked in conversation by calling the function below,
     //library.hasDoor = true;
     let hallway = new Room (['north','south'], [], 'Upon entering the hallway, you are most aware of what must be a centuries-worth of residue from tobacco smoke coating the peeling wallpaper, and the lack of cushion the matted persian rug below your feet provides you', 'this hallway looks like it looks, there are exits to the north and south.')
-    let library = new Room (['north'], [stick], 'this is a room description', 'this is what you see when you look at a room')
+    let library = new Room (['north'], [stick, dustyBook], 'this should appear after opening scene, and should update after player leaves, maybe using a counter for playerlocation.', 'this is what you see when you look at a room, and there is a dusty book') 
 
     //after init rooms, add relationship to other rooms
+    garden.adjacentRoom = {
+        nextRoomDirection: ['south'],
+        nextRoom: [den],
+    }
+    den.adjacentRoom = {
+        nextRoomDirection: ['north','west'],
+        nextRoom: [garden, greatRoom],
+    }
+    greatRoom.adjacentRoom = {
+        nextRoomDirection: ['east','south'],
+        nextRoom: [den, dining],
+    }
     kitchen.adjacentRoom = {
         nextRoomDirection: ['east'],
-        nextRoom: [dining]
+        nextRoom: [dining],
     }
     dining.adjacentRoom = {
-        nextRoomDirection: ['south', 'west'],
-        nextRoom: [hallway, kitchen]
+        nextRoomDirection: ['north','south', 'west'],
+        nextRoom: [greatRoom, hallway, kitchen],
     }
     hallway.adjacentRoom = {
         nextRoomDirection: ['north', 'south'],
-        nextRoom: [dining, library]
+        nextRoom: [dining, library],
     } 
     library.adjacentRoom = {
         nextRoomDirection: ['north'],
-        nextRoom: [hallway]
+        nextRoom: [hallway],
     }
 
 let player = {
@@ -69,7 +114,7 @@ let player = {
                 const entryText = document.querySelector('#room-entry-description')
                 entryText.innerHTML = `${player.currentLocation.roomDescription}`
                 entryText.style.display = 'block'
-            
+                player.currentLocation.roomCounter += 1           
             }
             changeRoom()
             describeRoom()
@@ -113,3 +158,15 @@ let uponAction = document.querySelector('#upon-action')
 //const library = new Room (['north'], [tvGuide], `you awake in a dusty library. How did I get here?`, `in this room there are ${this.roomItems[0]}, and there is an exit to the ${this.roomExits[0]}`)
 
 //GETTERS
+//STATE.
+const mapState = {
+    /*
+    libraryTimesEntered: 0,
+    hallwayTimesEntered: 0,
+    diningTimesEntered: 0,
+    kitchenTimesEntered: 0,
+    greatRoomTimesEntered: 0,
+    denTimesEntered: 0,
+    gardenTimesEntered: 0
+    */
+}
