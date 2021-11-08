@@ -1,0 +1,46 @@
+body {
+    background-color: black;
+}
+#user-view {
+    width: 400px;
+    height: 400px;
+    background-color: blanchedalmond;
+}
+#room-entry-description {
+    display: none;
+    font-size: 20px;
+}
+
+#upon-action {
+    display: none;
+}
+.move-directions {
+    border: none;
+    margin: 0 auto;    
+}
+.move-directions > button {
+    background: blanchedalmond;
+    font-size: 30px;
+}
+
+#north {
+    
+}
+#east {
+}
+#south {
+   
+}
+#west {
+
+}
+.player-actions {
+
+}
+.player-actions > button {
+    background: blanchedalmond;
+    font-size: 30px;
+}
+#look {
+
+}
