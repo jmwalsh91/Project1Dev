@@ -3,7 +3,7 @@ body {
     font-family: American Typewriter, serif;
     display: grid;
     grid-template-columns: 1fr 20% 40% 20% 1fr;
-    grid-template-rows: 1fr auto 2fr 3fr;
+    grid-template-rows: 1fr auto 2fr 5fr;
     row-gap: 15px;
     column-gap: 10px;
     
@@ -31,6 +31,12 @@ body {
     display: grid;
     grid-template-columns: 8% 7% 70% 8% 7%;
     grid-template-rows: 1fr 60% 1fr 20% 1fr;
+}
+#book-modal {
+    font-family: American Typewriter, serif;
+    z-index: 1;
+    display: none;
+    background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg') ;
 }
 #room-entry-description {
     font-family: American Typewriter, serif;
@@ -123,3 +129,56 @@ body {
     grid-row-end: 3;
     
 }
+.player-inventory {
+    font-family: American Typewriter, serif;
+    grid-column-start: 4;
+    grid-column-end: 5;
+    grid-row-start: 3;
+    grid-row-end: 5;
+    display: grid;
+    grid-template-rows: 30% 60% 10%;
+    grid-template-columns: 2;
+    align-items: center;
+    
+}
+.player-inventory > h2 {
+    font-family: American Typewriter, serif;
+    color: rgba(194,181,155,1);
+    margin: 0 auto;
+}
+#inventory-list {
+    display: contents;
+    font-family: American Typewriter, serif;
+}
+.inventory-item-element {
+    display: grid;
+    grid-template-rows: 2;
+    grid-template-columns: 2;
+    column-gap: 9px;;
+    
+}
+.inventory-item-element > button {
+    font-family: American Typewriter, serif;
+    background: rgba(194,181,155,1);
+    font-size: 15px;
+}
+.inventory-item-element > #item-name {
+    grid-row-start: 1;
+    grid-row-end: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+    
+}
+.inventory-item-element > #inspect {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+.inventory-item-element > #equip {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+

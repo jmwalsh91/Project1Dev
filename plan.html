@@ -9,10 +9,12 @@
 </head>
 <body>
     <div id="user-view">
+        <div id="book-modal">          
+            </div>
         <div class="selected" id="room-entry-description">
-
-        </div>
-        <div class="selected" id="upon-action"></div>
+            </div>
+        <div class="selected" id="upon-action">
+            </div>
     </div>
     <div class ="move-directions">
         <button id="north">N</button>
@@ -23,7 +25,13 @@
     <div class ="player-actions">
         <button id="doAction">use stick on door you goof</button>
         <button id="look">Look</button>
-        
+    </div>
+    <div class="player-inventory">
+        <h2>Inventory</h2>
+        <ul id="inventory-list">
+            <li class="inventory-item-element"><div id="item-name"></div> <button id="inspect">Inspect</button><button id="equip">Equip</button>
+            </li>
+        </ul>
     </div>
     <script src="plan.js"></script>
 </body>

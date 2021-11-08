@@ -6,39 +6,52 @@
 //
 
 class Room { 
-    constructor(roomExits, roomItems, roomDescription, roomLook, roomCounter) {
+    constructor(roomExits, roomItems, roomDescription, lookTarget, roomCounter) {
     this.roomExits = roomExits;
     this.roomItems = roomItems;
     this.roomDescription = roomDescription;
-    this.roomLook = roomLook;
+    this.lookTarget = lookTarget;
     this.roomCounter = 0;
 
     }
 }
 //item class, work in progress
 class Items {
-    constructor(itemName, itemDescription) {
+    constructor(itemName, lookTarget) {
     this.itemName = itemName,
-    this.itemDescription = itemDescription
+    this.lookTarget = lookTarget
     }
 }
-
 class Book extends Items {
-    super() {}
-    constructor(pages, bookText) {
+    constructor(itemName, lookTarget, pages, bookText) {
+        super(itemName, lookTarget)
+        this.pages = pages
+        this.bookText = bookText
+    }
+}
+/*
+class Book extends Items {
+    constructor(itemName, lookTarget,pages, bookText) {
+        super(itemName, lookTarget);
         this.pages = pages,
         this.bookText = bookText
     }
+   
     //Was thinking of a static method, but remembered that this. would refer to the class rather than the object intended. Maybe I can bind or solve this in the function? Something whacky like moving book to player.hands, which can only have an array length of 1, and then referencing player.hands[0] inside the read function?
-}
-let dustyBook = new Items ('a dusty book', 'the front cover has been torn off, and the ink has faded')
-dustyBook = {
+}*/
+let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 1, `My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`)
+/*dustyBook = {
     //books should have pages = num , and readBook() should bring up a modal z-indexed (above or before) userView. 
-    readBook() {
-        console.log('adding a function to class instance can work like this, but, as an aside, you really should consider making a book subclass')
+    readBook(book) {
+        let bookModal = document.querySelector('#book-modal')
+        bookModal.innerText = dustyBook.bookText;
+        bookModal.style.display = 'block';
+        
     }
-}
+}*/
 // //ITEMS declared in global scope for testing
+// ITEM functionality. 
+//Needs to render in DOM for roomDescription or lookTarget, be selectable, update player-action when selected to "pick up", ? update look-button target when selected?, after pick up should revert to player action display none and look-button target room
 let secretDoor = {
     isLocked: true,
     unlock() {
@@ -58,10 +71,14 @@ let turnkey = {
     }
 }
 //ITEMS SHOULD APPEAR IN LOOK() OR ROOM DESCRIPTION, AND DESCRIPTION AND LOOK SHOULD UPDATE TO NEW TEXT REFLECTING ITEMS ARE NOT THERE. 
-//Should I use a template literal to reference roomExits foor roomLook? Potential problem with declaration
+//Should I use a template literal to reference roomExits foor lookTarget? Potential problem with declaration
     let garden = new Room (['south'], [], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den.')
     let den = new Room (['north', 'west'], [], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north.')
-    let greatRoom = new Room (['east', 'south'], [], 'you walk into the great room and your gaze immediately rises to the top of the cathedral ceilings, great beams of rough hewn timber spanning the apex of this immense-feeling room', 'A long, hardwood bartop occupies half the length of the western wall, behind which are shelves filled with spirits posessing indiscernable branding')
+    let greatRoom = new Room (
+        ['east', 'south'],
+        [dustyBook], 
+        'you walk into the great room and your gaze immediately rises to the top of the cathedral ceiling, great beams of rough hewn timber spanning the apex of this immense-feeling room',
+         'A long, hardwood bartop occupies half the length of the western wall, behind which are shelves filled with spirits posessing indiscernable branding')
     let kitchen = new Room (['east'], [], 'kitchen', 'smells off')
     let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room', 'there is a bunch of stuff would you look at that now move on')
     console.log(Room)
@@ -114,7 +131,8 @@ let player = {
                 const entryText = document.querySelector('#room-entry-description')
                 entryText.innerHTML = `${player.currentLocation.roomDescription}`
                 entryText.style.display = 'block'
-                player.currentLocation.roomCounter += 1           
+                player.currentLocation.roomCounter += 1
+                 
             }
             changeRoom()
             describeRoom()
@@ -124,7 +142,7 @@ let player = {
     },
     look() {
         uponAction.style.display = "block"
-        uponAction.innerHTML = `${player.currentLocation.roomLook}`
+        uponAction.innerHTML = `${player.currentLocation.lookTarget}`
     }
 }
 //moving around
@@ -160,6 +178,7 @@ let uponAction = document.querySelector('#upon-action')
 //GETTERS
 //STATE.
 const mapState = {
+    
     /*
     libraryTimesEntered: 0,
     hallwayTimesEntered: 0,
