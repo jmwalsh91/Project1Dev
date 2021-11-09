@@ -17,14 +17,15 @@ class Room {
 }
 //item class, work in progress
 class Items {
-    constructor(itemName, lookTarget) {
+    constructor(itemName, lookTarget, objString) {
     this.itemName = itemName,
-    this.lookTarget = lookTarget
+    this.lookTarget = lookTarget,
+    this.objString = objString
     }
 }
 class Book extends Items {
-    constructor(itemName, lookTarget, pages, bookText) {
-        super(itemName, lookTarget)
+    constructor(itemName, lookTarget, objString, pages, bookText) {
+        super(itemName, lookTarget, objString)
         this.pages = pages
         this.bookText = bookText
     }
@@ -39,9 +40,9 @@ class Book extends Items {
    
     //Was thinking of a static method, but remembered that this. would refer to the class rather than the object intended. Maybe I can bind or solve this in the function? Something whacky like moving book to player.hands, which can only have an array length of 1, and then referencing player.hands[0] inside the read function?
 }*/
-let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 1, `My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`)
+let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 'dustyBook', 1, `My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`)
 console.log(dustyBook)
-let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...')
+let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...', 'letterOpener')
 
 
 /*dustyBook = {
@@ -135,15 +136,46 @@ let player = {
             let templateElement = (document.querySelector('li.inventory-item-element'));
             let newInventoryElement = templateElement.cloneNode(true);
             newInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
+            
+            newInventoryElement.setAttribute('data-objectString', `${item.objString}`)
             templateElement.replaceWith(newInventoryElement);
             newInventoryElement.style.visibility = "visible";
+      
             } else {
                 let nextInventoryElement = document.querySelector('li.inventory-item-element').cloneNode(true)
                 nextInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
                 document.querySelector('li.inventory-item-element').after(nextInventoryElement);
+                nextInventoryElement.setAttribute('data-objectString', `${item.objString}`)
                 //document.querySelector('ul').append(nextInventoryElement)
                 
             }
+            document.querySelector('ul').addEventListener('click', function(e){
+                let parent = e.target.parentNode
+                let objStr = parent.getAttribute('data-objectstring')
+                console.log(objStr)
+                if (e.target.innerHTML.includes('Inspect')) {
+                    for (let i = 0; i < player.inventory.length; i++) {
+                        console.log(player.inventory)
+                        //console.log(compareName)
+                        if (player.inventory[i].objString === objStr) {
+                        uponAction.innerHTML = player.inventory[i].lookTarget
+                        uponAction.style.display = 'block';
+                        console.log(player.inventory[i].lookTarget)}
+                        
+                        
+                        else { 
+                            console.log('no match')
+                        }
+                    }
+                    //console.log(player.inventory.includes(`${objStr}`))
+                    //console.log(Object.values(item).includes(`${objStr}`))
+                   // uponAction.innerHTML = `${objStr}`
+                   // uponAction.style.display = 'block';
+                    
+                } if (e.target.innerHTML.includes('Equip')) {
+                    console.log('boo')
+                }
+            })
             
 },
     getItem(item) {
@@ -193,7 +225,7 @@ let player = {
     look() {
         uponAction.style.display = "block"
         uponAction.innerHTML = `${player.currentLocation.lookTarget}`
-    }
+    },
     
 }
 //moving around
@@ -231,15 +263,3 @@ let uponAction = document.querySelector('#upon-action')
 
 //GETTERS
 //STATE.
-const mapState = {
-    
-    /*
-    libraryTimesEntered: 0,
-    hallwayTimesEntered: 0,
-    diningTimesEntered: 0,
-    kitchenTimesEntered: 0,
-    greatRoomTimesEntered: 0,
-    denTimesEntered: 0,
-    gardenTimesEntered: 0
-    */
-}

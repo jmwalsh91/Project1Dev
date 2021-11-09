@@ -1,5 +1,29 @@
+//WORKS
+//BUT ONLY IN FUNCTION SCOPE
+document.querySelector('#inspect').addEventListener('click', function(e){
+    console.log(e.target.parentNode)
+})
+
+// INVENTORY EVENT LISTENER
+let doAction = document.querySelector('#doAction')
+doAction.addEventListener('click', player.look)
+let inspectButton = document.querySelector('#inspect')
+//let parent = document.querySelector('li.inventory-item-element')
+console.log(parent)
+let parent = document.querySelector('ul')
+parent.addEventListener('click', function() {
+    console.log('work')
+})
+
+inspectButton.addEventListener("click", player.look)
+function inspect() {
+    //let target = inspectButton.parentNode.getAttribute('objAsString')
+    //console.log(target)
+    this.style.color = 'red';
+}
 
 
+//inspectButton.parentNode.getAttribute('objAsString')
 //FOR THE INTERACTION OF LOOK AND ITEM, OPEN A PROMISE ON CLICK OF LOOK, MAKE EVERYTHING ELSE UNCLICKABLE ASIDE FROM LOOK TARGETS, CLICKING ON LOOK TARGET PASSES TARGET TO LOOK.
 
 
