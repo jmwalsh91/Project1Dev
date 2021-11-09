@@ -1,3 +1,43 @@
+
+equipItem(item) {
+    console.log(this.equippedItem.length)
+    if (this.equippedItem.length = 0) {
+        this.equippedItem.push(item)
+        
+        //this.inventory.pop(item)
+        console.log('condition one')
+        console.log(player)
+    } else if (this.equippedItem.length = 1) {
+        //this.inventory.push(this.equippedItem[0])
+        //this.equippedItem.push(item)
+        console.log(this.equippedItem)
+        console.log(this.inventory + 'thing')
+        
+
+    }
+},
+
+//ON LINE 173 REMOVED ABSOLUTE EQUALITY OPERATOR === AND REPLACED WITH IDENTICAL VALUE OPERATOR == 
+ if (e.target.innerHTML.includes('Inspect')) {
+    for (item in player.inventory) {
+        if (item.itemName.toString() === `${objStr}`) {
+            console.log(item)
+            uponAction.innerHTML = item.lookTarget
+            uponAction.style.display = 'block';
+        } else { 
+            console.log('no match')
+        }
+    }
+    //console.log(player.inventory.includes(`${objStr}`))
+    //console.log(Object.values(item).includes(`${objStr}`))
+   // uponAction.innerHTML = `${objStr}`
+   // uponAction.style.display = 'block';
+    
+} if (e.target.innerHTML.includes('Equip')) {
+    console.log('boo')
+}
+
+
 //WORKS
 //BUT ONLY IN FUNCTION SCOPE
 document.querySelector('#inspect').addEventListener('click', function(e){

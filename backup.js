@@ -28,12 +28,7 @@ class Book extends Items {
         super(itemName, lookTarget, objString)
         this.pages = pages,
         this.bookTitle = bookTitle,
-        this.bookText = bookText/*,
-        function readBook() {
-            let bookModal = document.querySelector('#book-modal')
-                bookModal.innerHTML = player.equippedItem[0].bookText
-                bookModal.style.visibility = 'visible'
-        }*/
+        this.bookText = bookText
     }
 }
 /*
@@ -93,7 +88,7 @@ let turnkey = {
         'you walk into the great room and your gaze immediately rises to the top of the cathedral ceiling, great beams of rough hewn timber spanning the apex of this immense-feeling room',
          'A long, hardwood bartop occupies half the length of the western wall, behind which are shelves filled with spirits posessing indiscernable branding')
     let kitchen = new Room (['east'], [], 'kitchen', 'smells off')
-    let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room, and there are super fancy portraits on the wall, and a lot of chotchkys', 'there is a bunch of stuff would you look at that now move on')
+    let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room', 'there is a bunch of stuff would you look at that now move on')
     console.log(Room)
     //this can be unlocked in conversation by calling the function below,
     //library.hasDoor = true;
@@ -151,27 +146,15 @@ let player = {
         player.playerActionOption()
     },
     playerActionOption() {
-        let actionButton = document.querySelector('button#do-action')
         //check if book
         if ((this.equippedItem.length === 1) && this.equippedItem[0] instanceof Book === true) {
-            let bookModal = document.querySelector('#book-modal')
+            let actionButton = document.querySelector('button#do-action')
             actionButton.innerHTML = `Read ${this.equippedItem[0].bookTitle}`
-            actionButton.style.visibility = "visible"
-            bookModal.style.visibility = "hidden"
-            console.log(bookModal.style)
+            actionButton.style.visibility = 'visible'
             actionButton.addEventListener('click', function () {
-                if (bookModal.style.visibility === 'hidden'){
+                let bookModal = document.querySelector('#book-modal')
                 bookModal.innerHTML = player.equippedItem[0].bookText
-                bookModal.style.visibility = 'visible'
-                actionButton.innerHTML = `Close ${player.equippedItem[0].bookTitle}`
-                console.log('first if was hit')
-            } else if (bookModal.style.visibility === 'visible'){
-                bookModal.style.visibility = 'hidden'
-                actionButton.innerHTML = `Read ${player.equippedItem[0].bookTitle}`
-                console.log('else was hit')
-                } else {
-                    console.log('no visibility style')
-                }
+                bookModal.style.display = 'inline-block'
             })
             // doAction visible doAction innerText update doActionEventListenerClick [ refer to book] ReadBook()
         } else if ((this.equippedItem.length === 1) && (this.equippedItem instanceof Book === false)) {

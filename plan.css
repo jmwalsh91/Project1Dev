@@ -35,8 +35,17 @@ body {
 }
 #book-modal {
     font-family: American Typewriter, serif;
+    font-size: 23px;
+    padding: 10px;
+    text-align: center;
+    display:grid;
+    justify-content: center;
     z-index: 1;
-    display: none;
+    visibility: hidden;
+    grid-row-start: 1;
+    grid-row-end: 6;
+    grid-column-start: 1;
+    grid-column-end: 6;
     background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg') ;
 }
 #room-entry-description {
@@ -59,7 +68,7 @@ body {
     grid-row-end: 5;
     grid-column-start: 2;
     grid-column-end: 5;
-    background-color
+    background-color: rgba(138,130,112,.9);
 }
 .move-directions {
     border: none;
@@ -120,11 +129,12 @@ body {
     background: rgba(194,181,155,1);
     font-size: 25px;
 }
-#doAction {
+#do-action {
     grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 1;
     grid-row-end: 2;
+    visibility: hidden;
 }
 #look {
     grid-column-start: 2;
