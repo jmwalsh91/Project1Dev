@@ -40,6 +40,10 @@ class Book extends Items {
     //Was thinking of a static method, but remembered that this. would refer to the class rather than the object intended. Maybe I can bind or solve this in the function? Something whacky like moving book to player.hands, which can only have an array length of 1, and then referencing player.hands[0] inside the read function?
 }*/
 let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 1, `My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`)
+console.log(dustyBook)
+let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...')
+
+
 /*dustyBook = {
     //books should have pages = num , and readBook() should bring up a modal z-indexed (above or before) userView. 
     readBook(book) {
@@ -52,13 +56,15 @@ let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, an
 // //ITEMS declared in global scope for testing
 // ITEM functionality. 
 //Needs to render in DOM for roomDescription or lookTarget, be selectable, update player-action when selected to "pick up", ? update look-button target when selected?, after pick up should revert to player action display none and look-button target room
-let secretDoor = {
+
+/*let secretDoor = {
     isLocked: true,
     unlock() {
         let wayToEnd = 'east'
         library.roomExits.push(wayToEnd)
     }
 }
+*/
 let stick = {
     name: 'this is a stick',
     description: 'this is a stick, looks dumb if you ask me'
@@ -73,7 +79,7 @@ let turnkey = {
 //ITEMS SHOULD APPEAR IN LOOK() OR ROOM DESCRIPTION, AND DESCRIPTION AND LOOK SHOULD UPDATE TO NEW TEXT REFLECTING ITEMS ARE NOT THERE. 
 //Should I use a template literal to reference roomExits foor lookTarget? Potential problem with declaration
     let garden = new Room (['south'], [], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den.')
-    let den = new Room (['north', 'west'], [], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north.')
+    let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north.')
     let greatRoom = new Room (
         ['east', 'south'],
         [dustyBook], 
@@ -116,10 +122,35 @@ let turnkey = {
         nextRoomDirection: ['north'],
         nextRoom: [hallway],
     }
+    // add "originatesIn" to items, add originatesOn
+    //originatesIn is for 
+    //originatesOn is for template literal of roomDescription vs itemArray conditional
 
 let player = {
     inventory: [],
     currentLocation: library,
+    updateInventory(item) {
+        //console.log(document.querySelector('#item-name').innerHTML) 
+            if (document.querySelector('#item-name').innerHTML === 'Item Name') {
+            let templateElement = (document.querySelector('li.inventory-item-element'));
+            let newInventoryElement = templateElement.cloneNode(true);
+            newInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
+            templateElement.replaceWith(newInventoryElement);
+            newInventoryElement.style.visibility = "visible";
+            } else {
+                let nextInventoryElement = document.querySelector('li.inventory-item-element').cloneNode(true)
+                nextInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
+                document.querySelector('li.inventory-item-element').after(nextInventoryElement);
+                //document.querySelector('ul').append(nextInventoryElement)
+                
+            }
+            
+},
+    getItem(item) {
+        player.inventory.push(item)
+        player.currentLocation.roomItems.pop(item)
+        console.log(player.inventory)
+    },  
     move(direction) {
         if (player.currentLocation.roomExits.includes(direction)) {
             function changeRoom() {
@@ -129,9 +160,28 @@ let player = {
             }
             function describeRoom() {
                 const entryText = document.querySelector('#room-entry-description')
+                function restoreEntryText (){
+                    entryText.innerHTML = `${player.currentLocation.roomDescription}`
+                } 
                 entryText.innerHTML = `${player.currentLocation.roomDescription}`
                 entryText.style.display = 'block'
                 player.currentLocation.roomCounter += 1
+                if (player.currentLocation.roomItems.length > 0 && player.currentLocation.roomItems.length < 2 ) {
+                    let firstItem = player.currentLocation.roomItems[0]
+                    let getFirstItem = document.createElement('p')
+                    getFirstItem.innerText = player.currentLocation.roomItems[0].itemName;
+                    getFirstItem.classList.add('get-item-style')
+                    entryText.innerHTML = player.currentLocation.roomDescription + `<br><br>You see `
+                    entryText.append(getFirstItem)
+                    getFirstItem.addEventListener('click', function () {
+                        player.getItem(firstItem)
+                        player.updateInventory(firstItem)
+                    })
+                    //getFirstItem.addEventListener('click', player.updateInventory) 
+                    getFirstItem.addEventListener('click', restoreEntryText)
+                    
+
+                }
                  
             }
             changeRoom()
@@ -144,6 +194,7 @@ let player = {
         uponAction.style.display = "block"
         uponAction.innerHTML = `${player.currentLocation.lookTarget}`
     }
+    
 }
 //moving around
 
@@ -172,6 +223,9 @@ westButton.addEventListener('click', function () {
 const lookButton = document.querySelector('#look')
 lookButton.addEventListener('click', player.look)
 let uponAction = document.querySelector('#upon-action')
+
+//getItem
+
 
 //const library = new Room (['north'], [tvGuide], `you awake in a dusty library. How did I get here?`, `in this room there are ${this.roomItems[0]}, and there is an exit to the ${this.roomExits[0]}`)
 

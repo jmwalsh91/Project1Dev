@@ -6,6 +6,7 @@ body {
     grid-template-rows: 1fr auto 2fr 5fr;
     row-gap: 15px;
     column-gap: 10px;
+    cursor: pointer;
     
 }
 .selected {
@@ -46,6 +47,9 @@ body {
     grid-row-end: 3;
     grid-column-start: 3;
     grid-column-end: 4;
+}
+#room-entry-description:hover {
+    cursor: grab;
 }
 
 #upon-action {
@@ -136,9 +140,10 @@ body {
     grid-row-start: 3;
     grid-row-end: 5;
     display: grid;
-    grid-template-rows: 30% 60% 10%;
+    grid-template-rows: 12% 1fr 10%;
     grid-template-columns: 2;
-    align-items: center;
+    align-items: start;
+    justify-items: center;
     
 }
 .player-inventory > h2 {
@@ -147,27 +152,36 @@ body {
     margin: 0 auto;
 }
 #inventory-list {
-    display: contents;
+    text-align: center;
     font-family: American Typewriter, serif;
+    display: grid;
+    row-gap: 10px;
 }
 .inventory-item-element {
     display: grid;
     grid-template-rows: 2;
     grid-template-columns: 2;
-    column-gap: 9px;;
-    
+    column-gap: 9px;
+    visibility: hidden;
 }
 .inventory-item-element > button {
     font-family: American Typewriter, serif;
     background: rgba(194,181,155,1);
     font-size: 15px;
 }
+.inventory-item-element > button:hover {
+    background-color: black;
+    color: rgba(194,181,155,1);
+    cursor: grabbing;
+}
 .inventory-item-element > #item-name {
     grid-row-start: 1;
     grid-row-end: 2;
     grid-column-start: 1;
     grid-column-end: 3;
-    
+    font-family: American Typewriter, serif;
+    color: rgba(194,181,155,1);
+    margin: 0 auto;
 }
 .inventory-item-element > #inspect {
     grid-row-start: 2;
@@ -182,3 +196,28 @@ body {
     grid-column-end: 3;
 }
 
+.get-item-style {
+    font-family: American Typewriter, serif;
+    display: inline;
+    font-size: 20px;
+    color: black;
+    transition-duration: .2s;
+    text-emphasis: italic;
+    background-color: rgba(194,181,155,.5);
+    padding: 0px 10px 0px 8px;
+    border-radius: .3em;
+}
+
+.get-item-style:hover {
+    background-color: black;
+    color: rgba(194,181,155,1);
+    cursor: grabbing;
+}
+.gone-item-style {
+    display: none;
+}
+/*
+.hide {
+    visibility: hidden;
+}
+*/
