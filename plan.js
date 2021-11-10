@@ -39,15 +39,16 @@ class Book extends Items {
     }
 }
 class Npc {
-    constructor(name, whenSeen, prepose, describeNpc) {
+    constructor(name, whenSeen, prepose, describeNpc, inventory) {
         this.name = name,
         this.whenSeen = whenSeen,
         this.prepose = prepose,
-        this.describeNpc = describeNpc
+        this.describeNpc = describeNpc,
+        this.inventory = inventory 
     }
 }
-
-let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard')
+let brassKey = new Items ('a patinated brass key', 'An old brass key, the air has done violence to its chemistry','brassKey', 'Does this ever come up? Will it be referenced?')
+let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard', [brassKey])
 /*
 class Book extends Items {
     constructor(itemName, lookTarget,pages, bookText) {
@@ -150,16 +151,18 @@ class Conversation  {
     }
 }
 let oldManConversation = {
-    opener: ['the enemy head of man, the enemy head of the flesh rising up at its expense, thus becomes the enemy head of the head.'],
+    opener: [`the enemy head of man, the enemy head of the flesh rising up at its expense, thus becomes the enemy head of the head.`],
+    closer: [`The old man walks towards you, his penny loafers--which look as if they have suffered centuries of abuse and wear--sinking into the saturated soil nearly a hands-width. Movement appears to be considerably less painful now, but he appears to struggle to recall the location of some item as he slides his arthritic hands into one pocket on his waistcoat after another. Finally, he procures a large, patinated brass key, places it into your hand, and folds your fingers over it as if to protect it from chance. "She should be to the EAST of the LIBRARY. This KEY should help."`],
     npcSpeech: {
-        cordial: [[`the man perks up, still on his hands and knees, and flashes a near-toothless grin` +  ` "A guest! a guest! Has Elizabeth offered you tea, yet?`], [`"Ah, yes! This is... this... is.. is.. is.. is.. Has Elizabeth offered you tea, yet?`], ['cordial 3'], ['cordial 4'], ['cordial 5']],
-        somber: [['the dance, the dance, of human life...'], [`"No need to be afraid, child.How are the roses doing, out there? How is Elizabeth? Elizabeth?`],['somber 3'], ['somber 4'], ['somber 5']],
-        standoffish: [[`the old man turns away, buries his head in his hands, and rests his forehead in the dirt` + '<br><br>' + `"..i have no intention of relinquishing under any circumstances`],[`the man shakes his head and clasps his skull with both hands.` + '<br><br>' + `"how BLESSED you ARE with your lame EXISTENCE"` ], ['standoff 3'], ['standoff 4'], ['standoff 5']]
+        cordial: [['The man perks up, still on his hands and knees, and flashes a near-toothless grin' + `"A guest! a guest! Has Elizabeth offered you tea, yet?" `], [`"Ah, yes! This is... this... is.. is.. is.. is.. Has Elizabeth offered you tea, yet?`], [`The old man gets up slowly, which appears to take a great deal of effort. "...You didn't see her? Please, child, I need you to go check on her."`], [` The man looks as if he as been inflicted with a nervous ecstasy, an almost painful expression of joy flashes across his face. "Ah! Thank you!`], [`${this.closer}`]],
+        somber: [['the dance, the dance, of human life...'], [`"No need to be afraid, child.How are the roses doing, out there? How is Elizabeth? Elizabeth?`],[`The old man gets up slowly, struggling to maintain control of his lower limbs, which appear to be one hair-width away from failure. "...You didn't see her? ...I need you to go check on her."`], [`Briefly, an expression of excitement flashes across the old man's face, just for one moment, before being consumed by a somber demeanor. "Thank you, young man.`], [this.closer]],
+        standoffish: [[`the old man turns away, buries his head in his hands, and rests his forehead in the dirt` + '<br><br>' + `"..i have no intention of relinquishing under any circumstances`],[`the man shakes his head and clasps his skull with both hands.` + '<br><br>' + `"how BLESSED you ARE with your lame EXISTENCE...How did Elizabeth let this charlatan into the garden?` ], [`Agitated, the old man struggles to stand up, knees shaking and brow furrowing in a display of great effort. "Can the idiot do a thing? One thing? ANYTHING right? You must find Elizabeth." `], [`"I'm afraid that you don't have much of a choice, if you ever want to go home."`], [this.closer]]
     },
     playerSpeech:{
-        lineOne: [[`"are you alright?"`], [`"...My apologies, sir, but could you perhaps tell me...where exactly we are?"`],], 
-        lineTwo: [['remain silent'], ['glance behind your back, and scan your surroundings cautiously']],
-        lineThree: [[`"What's wrong with you?"`], [`"Where the hell am I? What is this place"`]]
+        lineOne: [[`"are you alright?"`], [`"...My apologies, sir, but could you perhaps tell me...where exactly we are?"`], [`"Who is Elizabeth?`], [`"Certainly. It would be my pleasure"`],[`"And where should I find her?`]], 
+        lineTwo: [['remain silent'], ['glance behind your back, and scan your surroundings cautiously'],[`"...Elizabeth?"`], [`"I think I can do that."`], [`"Where is she?`]],
+        lineThree: [[`"What's wrong with you?"`], [`"Where the hell am I? What is this place"`],[`"Old man, what are you talking about?"`],[`"I'm not doing anything for you, old man."`], [`"What am I supposed to do, then?"`],
+        ]
     }, 
     placeCounter: -1,
     playerCounter: 0,
@@ -168,12 +171,36 @@ let oldManConversation = {
         let conv1 = document.querySelector('#convo1')
         let conv2 = document.querySelector('#convo2')
         let conv3 = document.querySelector('#convo3')
-        if (disposition == 'cordial') {
+        if (disposition == 'cordial' && this.placeCounter < 4) {
+            console.log('under 4')
+            console.log(this.placeCounter)
             npcTalk.textContent = this.npcSpeech.cordial[this.placeCounter]
-        } else if (disposition == 'somber') {
+        } else if (disposition == 'somber' && this.placeCounter < 4) {
             npcTalk.textContent = this.npcSpeech.somber[this.placeCounter]
-        } else if (disposition == 'standoffish') {
+        } else if (disposition == 'standoffish' && this.placeCounter < 4) {
             npcTalk.textContent = this.npcSpeech.standoffish[this.placeCounter]
+        } else if (oldManConversation.placeCounter === 4) {
+            npcTalk.textContent = this.closer[0]
+            conv1.style.visibility = "hidden"
+            conv2.style.visibility = "hidden"
+            conv3.style.visibility = "hidden"
+
+            function leaveConvo () {
+                let greetButton = document.querySelector('#greet')
+                greetButton.style.visibility = "hidden"
+                let actionButton = document.querySelector('button#do-action')
+                actionButton.style.visibility = "visible"
+                actionButton.innerHTML = `Take ${oldMan.inventory[0].itemName} and leave conversation`
+                actionButton.addEventListener('click', restoreAndUpdate = () =>  {
+                     console.log('works')
+                     player.inventory.push(oldMan.inventory[0])
+                    oldMan.inventory.pop()
+                    console.log(player.inventory)
+                    
+
+                })
+            }
+            leaveConvo()
         }
         function updateOptions() {
             conv1.innerHTML = oldManConversation.playerSpeech.lineOne[oldManConversation.playerCounter]
