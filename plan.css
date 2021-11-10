@@ -46,7 +46,65 @@ body {
     grid-row-end: 6;
     grid-column-start: 1;
     grid-column-end: 6;
-    background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg') ;
+    background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    outline-offset: -10px;
+    border: 5px solid black;
+}
+#conversation-modal {
+    font-family: American Typewriter, serif;
+    background-color: black;
+    font-size: 23px;
+    padding: 10px;
+    text-align: center;
+    display:grid;
+    z-index: 1;
+    visibility: hidden;
+    grid-row-start: 1;
+    grid-row-end: 6;
+    grid-column-start: 1;
+    grid-column-end: 6;
+    grid-template-columns: 5% 1fr 5% 1fr 5% 1fr 5%;
+    grid-template-rows: 10% 5fr 5% 2fr 5%;
+}
+#conversation-modal > button {
+    font-family: American Typewriter, serif;
+    background: rgba(194,181,155,1);
+    border-radius: .6em;
+    font-size: 25px;
+}
+#npc-speech {
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
+    grid-column-end: 7;
+    background-color: black;
+    color: rgba(194,181,155,.5);
+}
+
+#convo1 {
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+#convo2 {
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 4;
+    grid-column-end: 5;
+}
+#convo3 {
+    grid-row-start: 4;
+    grid-row-end: 5;
+    grid-column-start: 6;
+    grid-column-end: 7;
+}
+
+#conversation-modal > button:hover {
+    background-color: black;
+    color: rgba(194,181,155,1);
 }
 #room-entry-description {
     font-family: American Typewriter, serif;
@@ -129,6 +187,12 @@ body {
     background: rgba(194,181,155,1);
     font-size: 25px;
 }
+.player-actions > button:hover {
+    background-color: black;
+    color: rgba(194,181,155,1);
+}
+
+
 #do-action {
     grid-column-start: 1;
     grid-column-end: 4;
@@ -141,6 +205,15 @@ body {
     grid-column-end: 3;
     grid-row-start: 2;
     grid-row-end: 3;
+}
+#greet {
+    visibility: hidden;
+    z-index: + 1;
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 2;
+        
     
 }
 .player-inventory {

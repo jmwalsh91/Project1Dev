@@ -17,20 +17,37 @@ class Room {
 }
 //item class, work in progress
 class Items {
-    constructor(itemName, lookTarget, objString) {
+    constructor(itemName, lookTarget, objString, where) {
     this.itemName = itemName,
     this.lookTarget = lookTarget,
     this.objString = objString
+    this.where = where;
+    
     }
 }
 class Book extends Items {
-    constructor(itemName, lookTarget, objString, pages, bookTitle, bookText) {
-        super(itemName, lookTarget, objString)
+    constructor(itemName, lookTarget, objString, where, pages, bookTitle, bookText) {
+        super(itemName, lookTarget, objString, where)
         this.pages = pages,
         this.bookTitle = bookTitle,
-        this.bookText = bookText
+        this.bookText = bookText/*,
+        function readBook() {
+            let bookModal = document.querySelector('#book-modal')
+                bookModal.innerHTML = player.equippedItem[0].bookText
+                bookModal.style.visibility = 'visible'
+        }*/
     }
 }
+class Npc {
+    constructor(name, whenSeen, prepose, describeNpc) {
+        this.name = name,
+        this.whenSeen = whenSeen,
+        this.prepose = prepose,
+        this.describeNpc = describeNpc
+    }
+}
+
+let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard')
 /*
 class Book extends Items {
     constructor(itemName, lookTarget,pages, bookText) {
@@ -41,9 +58,10 @@ class Book extends Items {
    
     //Was thinking of a static method, but remembered that this. would refer to the class rather than the object intended. Maybe I can bind or solve this in the function? Something whacky like moving book to player.hands, which can only have an array length of 1, and then referencing player.hands[0] inside the read function?
 }*/
-let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 'dustyBook', 1, `"Journal of Albion Moonlight"` ,`My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`)
-console.log(dustyBook)
-let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...', 'letterOpener')
+let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 'dustyBook', 'laying haphazard on the ground', 1, `"Journal of Albion Moonlight"` ,`My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`);
+
+let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...', 'letterOpener', 'glimmering on a dusty side-table');
+let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been made to mimic a key that is now lost', 'pewterKey', 'jutting out of the night-black peat of the gardenbed')
 
 
 /*dustyBook = {
@@ -67,38 +85,33 @@ let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing 
     }
 }
 */
-let stick = {
-    name: 'this is a stick',
-    description: 'this is a stick, looks dumb if you ask me'
-}
-let turnkey = {
-    name: 'key',
-    description: 'you use this in doors',
-    unlock(door) {
-        
-    }
-}
+
 //ITEMS SHOULD APPEAR IN LOOK() OR ROOM DESCRIPTION, AND DESCRIPTION AND LOOK SHOULD UPDATE TO NEW TEXT REFLECTING ITEMS ARE NOT THERE. 
 //Should I use a template literal to reference roomExits foor lookTarget? Potential problem with declaration
-    let garden = new Room (['south'], [], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den.')
-    let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north.')
+    let grove = new Room (['south'], [], 'You get on your hands and knees and begin to crawl through the thicket, feeling the occasional rose-thorn trail across your skin. You find yourself in a dimly lit alcove of sorts, a thick mat of moss covering the spongey and pungent earth. Strange mutterings float from the far side of the alcove', 'You turn your head to investigate the source of the sound, scanning the shadows. ')
+    let garden = new Room (['south', 'north'], [pewterKey], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den. ')
+    let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north. ')
     let greatRoom = new Room (
         ['east', 'south'],
         [dustyBook], 
         'you walk into the great room and your gaze immediately rises to the top of the cathedral ceiling, great beams of rough hewn timber spanning the apex of this immense-feeling room',
          'A long, hardwood bartop occupies half the length of the western wall, behind which are shelves filled with spirits posessing indiscernable branding')
     let kitchen = new Room (['east'], [], 'kitchen', 'smells off')
-    let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room', 'there is a bunch of stuff would you look at that now move on')
+    let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room, and there are super fancy portraits on the wall, and a lot of chotchkys', 'there is a bunch of stuff would you look at that now move on')
     console.log(Room)
     //this can be unlocked in conversation by calling the function below,
     //library.hasDoor = true;
     let hallway = new Room (['north','south'], [], 'Upon entering the hallway, you are most aware of what must be a centuries-worth of residue from tobacco smoke coating the peeling wallpaper, and the lack of cushion the matted persian rug below your feet provides you', 'this hallway looks like it looks, there are exits to the north and south.')
-    let library = new Room (['north'], [stick, dustyBook], 'this should appear after opening scene, and should update after player leaves, maybe using a counter for playerlocation.', 'this is what you see when you look at a room, and there is a dusty book') 
+    let library = new Room (['north'], [], 'this should appear after opening scene, and should update after player leaves, maybe using a counter for playerlocation.', 'this is what you see when you look at a room, and there is a dusty book') 
 
     //after init rooms, add relationship to other rooms
-    garden.adjacentRoom = {
+    grove.adjacentRoom = {
         nextRoomDirection: ['south'],
-        nextRoom: [den],
+        nextRoom: [garden],
+    }
+    garden.adjacentRoom = {
+        nextRoomDirection: ['south','north'],
+        nextRoom: [den, grove],
     }
     den.adjacentRoom = {
         nextRoomDirection: ['north','west'],
@@ -124,10 +137,93 @@ let turnkey = {
         nextRoomDirection: ['north'],
         nextRoom: [hallway],
     }
+
+    //POPULATE NPCS 
+    grove.hasNpc = true;
+    grove.npc = oldMan;
     // add "originatesIn" to items, add originatesOn
     //originatesIn is for 
     //originatesOn is for template literal of roomDescription vs itemArray conditional
+class Conversation  {
+    constructor() {
 
+    }
+}
+let oldManConversation = {
+    opener: ['the enemy head of man, the enemy head of the flesh rising up at its expense, thus becomes the enemy head of the head.'],
+    npcSpeech: {
+        cordial: [[`the man perks up, still on his hands and knees, and flashes a near-toothless grin` +  ` "A guest! a guest! Has Elizabeth offered you tea, yet?`], [`"Ah, yes! This is... this... is.. is.. is.. is.. Has Elizabeth offered you tea, yet?`], ['cordial 3'], ['cordial 4'], ['cordial 5']],
+        somber: [['the dance, the dance, of human life...'], [`"No need to be afraid, child.How are the roses doing, out there? How is Elizabeth? Elizabeth?`],['somber 3'], ['somber 4'], ['somber 5']],
+        standoffish: [[`the old man turns away, buries his head in his hands, and rests his forehead in the dirt` + '<br><br>' + `"..i have no intention of relinquishing under any circumstances`],[`the man shakes his head and clasps his skull with both hands.` + '<br><br>' + `"how BLESSED you ARE with your lame EXISTENCE"` ], ['standoff 3'], ['standoff 4'], ['standoff 5']]
+    },
+    playerSpeech:{
+        lineOne: [[`"are you alright?"`], [`"...My apologies, sir, but could you perhaps tell me...where exactly we are?"`],], 
+        lineTwo: [['remain silent'], ['glance behind your back, and scan your surroundings cautiously']],
+        lineThree: [[`"What's wrong with you?"`], [`"Where the hell am I? What is this place"`]]
+    }, 
+    placeCounter: -1,
+    firstCounter: 0,
+    secondCounter: 0,
+    thirdCounter: 0,
+    advanceConvo(disposition){
+        let npcTalk = document.querySelector('#npc-speech')
+        if (disposition == 'cordial') {
+            npcTalk.textContent = this.npcSpeech.cordial[this.placeCounter]
+        } else if (disposition == 'somber') {
+            npcTalk.textContent = this.npcSpeech.somber[this.placeCounter]
+        } else if (disposition == 'standoffish') {
+            npcTalk.textContent = this.npcSpeech.standoffish[this.placeCounter]
+        }
+        function updateOptions() {
+            conv1.innerHTML = this.playerSpeech.lineOne[this.placeCounter - 1]
+            conv2.innerHTML = this.playerSpeech.lineTwo[this.placeCounter - 1]
+            conv3.innerHTML = this.playerSpeech.lineThree[this.placeCounter - 1]
+        }
+        updateOptions()
+    },
+    initConvo() {
+        let npcTalk = document.querySelector('#npc-speech')
+        let conv1 = document.querySelector('#convo1')
+        let conv2 = document.querySelector('#convo2')
+        let conv3 = document.querySelector('#convo3')
+        npcTalk.textContent = this.opener
+        conv1.innerHTML = this.playerSpeech.lineOne[0]
+        conv2.innerHTML = this.playerSpeech.lineTwo[0]
+        conv3.innerHTML = this.playerSpeech.lineThree[0]
+        conv1.setAttribute('data-disp', 'cordial')
+        conv2.setAttribute('data-disp', 'somber')
+        conv3.setAttribute('data-disp', 'standoffish')
+        conv1.addEventListener('click', () => {
+            let disposition = conv1.getAttribute('data-disp')
+            this.placeCounter += 1;
+            console.log(this.placeCounter)
+            this.advanceConvo(disposition)
+            console.log(disposition)
+        })
+        conv2.addEventListener('click', () => {
+            let disposition = conv2.getAttribute('data-disp')
+            this.placeCounter += 1;
+            console.log(this.placeCounter)
+            this.advanceConvo(disposition)
+            console.log(disposition)
+        })
+            conv3.addEventListener('click', () => {
+            let disposition = conv3.getAttribute('data-disp')
+            this.placeCounter += 1;
+            console.log(this.placeCounter)
+            this.advanceConvo(disposition)
+            console.log(disposition)
+        })
+    }/*
+    playerResponds() {
+    this.placeCounter += 1;
+    let responseTracker = document
+    if ()
+    
+    }*/
+}
+console.log(oldManConversation)
+console.log(oldManConversation.npcSpeech.cordial[0],oldManConversation.npcSpeech.somber[1])
 let player = {
     inventory: [],
     currentLocation: library,
@@ -146,15 +242,27 @@ let player = {
         player.playerActionOption()
     },
     playerActionOption() {
+        let actionButton = document.querySelector('button#do-action')
         //check if book
         if ((this.equippedItem.length === 1) && this.equippedItem[0] instanceof Book === true) {
-            let actionButton = document.querySelector('button#do-action')
+            let bookModal = document.querySelector('#book-modal')
             actionButton.innerHTML = `Read ${this.equippedItem[0].bookTitle}`
-            actionButton.style.visibility = 'visible'
+            actionButton.style.visibility = "visible"
+            bookModal.style.visibility = "hidden"
+            console.log(bookModal.style)
             actionButton.addEventListener('click', function () {
-                let bookModal = document.querySelector('#book-modal')
+                if (bookModal.style.visibility === 'hidden'){
                 bookModal.innerHTML = player.equippedItem[0].bookText
-                bookModal.style.display = 'inline-block'
+                bookModal.style.visibility = 'visible'
+                actionButton.innerHTML = `Close ${player.equippedItem[0].bookTitle}`
+                console.log('first if was hit')
+            } else if (bookModal.style.visibility === 'visible'){
+                bookModal.style.visibility = 'hidden'
+                actionButton.innerHTML = `Read ${player.equippedItem[0].bookTitle}`
+                console.log('else was hit')
+                } else {
+                    console.log('no visibility style')
+                }
             })
             // doAction visible doAction innerText update doActionEventListenerClick [ refer to book] ReadBook()
         } else if ((this.equippedItem.length === 1) && (this.equippedItem instanceof Book === false)) {
@@ -236,7 +344,9 @@ let player = {
                     getFirstItem.innerText = player.currentLocation.roomItems[0].itemName;
                     getFirstItem.classList.add('get-item-style')
                     entryText.innerHTML = player.currentLocation.roomDescription + `<br><br>You see `
+                    //`${getFirstItem}` + `${firstItem.where}`
                     entryText.append(getFirstItem)
+                    entryText.append(firstItem.where)
                     getFirstItem.addEventListener('click', function () {
                         player.getItem(firstItem)
                         player.updateInventory(firstItem)
@@ -254,9 +364,47 @@ let player = {
             console.log('you cannot go that way')
         }
     },
+    startConversation () {
+        let conversationModal = document.querySelector('#conversation-modal')
+        conversationModal.style.visibility = "visible"
+        console.log(conversationModal)
+        oldManConversation.initConvo()
+    },
+    npcGreetPrompt() {
+        let greetButton = document.querySelector('#greet')
+        let actionButton = document.querySelector('#do-action')
+        actionButton.style.visibility = "hidden"
+        greetButton.style.visibility = "visible"
+        greetButton.textContent = `Greet the ${player.currentLocation.npc.name}`
+        greetButton.addEventListener('click', this.startConversation)
+        console.log('function invoked')
+        
+    },
     look() {
         uponAction.style.display = "block"
         uponAction.innerHTML = `${player.currentLocation.lookTarget}`
+        function checkNpc() {
+            if (player.currentLocation.hasNpc === true) {
+                let npcTarget = player.currentLocation.npc
+                let npcDescribe = npcTarget.describeNpc
+                let textTarget = document.querySelector('#upon-action')
+                let npcText = document.createElement('p')
+                    npcText.innerText = `${player.currentLocation.npc.name}`
+                    npcText.classList.add('get-item-style')
+                if (npcTarget.whenSeen == 'look') {
+                    function npcOnLook () {
+                        console.log('onlook')
+                        textTarget.append(npcTarget.prepose)
+                        textTarget.append(npcText)
+                        textTarget.append(npcTarget.describeNpc)
+                        npcText.addEventListener('click', function () {
+                            player.npcGreetPrompt()
+                            console.log('click')
+                        })
+                    } npcOnLook()
+                }
+            }
+        }checkNpc()
     },
     
 }
