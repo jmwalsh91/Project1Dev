@@ -47,6 +47,7 @@ class Npc {
         this.inventory = inventory 
     }
 }
+
 let brassKey = new Items ('a patinated brass key', 'An old brass key, the air has done violence to its chemistry','brassKey', 'Does this ever come up? Will it be referenced?')
 let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard', [brassKey])
 /*
@@ -145,7 +146,18 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
     // add "originatesIn" to items, add originatesOn
     //originatesIn is for 
     //originatesOn is for template literal of roomDescription vs itemArray conditional
-class Conversation  {
+
+let gameState = {
+    oldManBoolean: false,
+    oldManState() {
+        if (oldManConversation.placeCounter == 4) {
+            return this.oldManBoolean = true 
+        } else {
+            return this.oldManBoolean = false
+        }
+    }
+}
+    class Conversation  {
     constructor() {
 
     }
@@ -193,9 +205,22 @@ let oldManConversation = {
                 actionButton.innerHTML = `Take ${oldMan.inventory[0].itemName} and leave conversation`
                 actionButton.addEventListener('click', restoreAndUpdate = () =>  {
                      console.log('works')
+                     let item = oldMan.inventory[0]
                      player.inventory.push(oldMan.inventory[0])
                     oldMan.inventory.pop()
                     console.log(player.inventory)
+                    console.log(item)
+                    player.updateInventory(item)
+                    let conversationModal = document.querySelector('#conversation-modal')
+                    conversationModal.style.visibility = "hidden"
+                    if (player.equippedItem.length == 1) {
+                        player.playerActionOption()
+                    } else if (player.equippedItem == 0) {
+                        actionButton.style.visibility = "hidden"
+                    }
+                    gameState.oldManState()
+                    //EVERYTHING BUT INSPECT MATCH WORKS, still need nonbook equip item action button
+
                     
 
                 })
