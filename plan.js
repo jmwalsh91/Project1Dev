@@ -162,11 +162,12 @@ let oldManConversation = {
         lineThree: [[`"What's wrong with you?"`], [`"Where the hell am I? What is this place"`]]
     }, 
     placeCounter: -1,
-    firstCounter: 0,
-    secondCounter: 0,
-    thirdCounter: 0,
+    playerCounter: 0,
     advanceConvo(disposition){
         let npcTalk = document.querySelector('#npc-speech')
+        let conv1 = document.querySelector('#convo1')
+        let conv2 = document.querySelector('#convo2')
+        let conv3 = document.querySelector('#convo3')
         if (disposition == 'cordial') {
             npcTalk.textContent = this.npcSpeech.cordial[this.placeCounter]
         } else if (disposition == 'somber') {
@@ -175,11 +176,11 @@ let oldManConversation = {
             npcTalk.textContent = this.npcSpeech.standoffish[this.placeCounter]
         }
         function updateOptions() {
-            conv1.innerHTML = this.playerSpeech.lineOne[this.placeCounter - 1]
-            conv2.innerHTML = this.playerSpeech.lineTwo[this.placeCounter - 1]
-            conv3.innerHTML = this.playerSpeech.lineThree[this.placeCounter - 1]
+            conv1.innerHTML = oldManConversation.playerSpeech.lineOne[oldManConversation.playerCounter]
+            conv2.innerHTML = oldManConversation.playerSpeech.lineTwo[oldManConversation.playerCounter]
+            conv3.innerHTML = oldManConversation.playerSpeech.lineThree[oldManConversation.playerCounter]
         }
-        //this.advanceConvo()
+        updateOptions()
     },
     initConvo() {
         let npcTalk = document.querySelector('#npc-speech')
@@ -196,6 +197,7 @@ let oldManConversation = {
         conv1.addEventListener('click', () => {
             let disposition = conv1.getAttribute('data-disp')
             this.placeCounter += 1;
+            this.playerCounter += 1;
             console.log(this.placeCounter)
             this.advanceConvo(disposition)
             console.log(disposition)
@@ -203,6 +205,7 @@ let oldManConversation = {
         conv2.addEventListener('click', () => {
             let disposition = conv2.getAttribute('data-disp')
             this.placeCounter += 1;
+            this.playerCounter += 1;
             console.log(this.placeCounter)
             this.advanceConvo(disposition)
             console.log(disposition)
@@ -210,6 +213,7 @@ let oldManConversation = {
             conv3.addEventListener('click', () => {
             let disposition = conv3.getAttribute('data-disp')
             this.placeCounter += 1;
+            this.playerCounter += 1;
             console.log(this.placeCounter)
             this.advanceConvo(disposition)
             console.log(disposition)
