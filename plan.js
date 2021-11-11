@@ -227,16 +227,12 @@ let oldManConversation = {
                 let actionButton = document.querySelector('button#do-action')
                 actionButton.style.visibility = "visible"
                 actionButton.innerHTML = `Take ${oldMan.inventory[0].itemName} and leave conversation`
-                
-                actionButton.addEventListener('click', function restoreAndUpdate()  {
-                     console.log('works')
-                     let item = oldMan.inventory[0]
-                     player.inventory.push(oldMan.inventory[0])
+                let item = oldMan.inventory[0]
+                let conversationModal = document.querySelector('#conversation-modal')
+                function restoreAndUpdate() {
+                    player.inventory.push(oldMan.inventory[0])
                     oldMan.inventory.pop()
-                    console.log(player.inventory)
-                    console.log(item)
                     player.updateInventory(item)
-                    let conversationModal = document.querySelector('#conversation-modal')
                     conversationModal.style.visibility = "hidden"
                     if (player.equippedItem.length == 1) {
                         player.playerActionOption()
@@ -244,12 +240,9 @@ let oldManConversation = {
                         actionButton.style.visibility = "hidden"
                     }
                     gameState.oldManState()
-                    
-                    //EVERYTHING BUT INSPECT MATCH WORKS, still need nonbook equip item action button
-
-                    
-
-                })
+                    actionButton.removeEventListener('click', restoreAndUpdate)
+                }
+                actionButton.addEventListener('click', restoreAndUpdate)
             }
             leaveConvo()
         }
