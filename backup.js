@@ -1,3 +1,34 @@
+//trying to remove event listener and put the npc dismiss for talkcounter === 1
+look() {
+    uponAction.style.visibility = "visible"
+    uponAction.innerHTML = `${player.currentLocation.lookTarget}`
+    function checkNpc() {
+        if (player.currentLocation.hasNpc === true) {
+            let npcTarget = player.currentLocation.npc
+            let npcDescribe = npcTarget.describeNpc
+            let textTarget = document.querySelector('#upon-action')
+            let npcText = document.createElement('p')
+                npcText.innerText = `${player.currentLocation.npc.name}`
+                npcText.classList.add('get-item-style')
+            if (npcTarget.whenSeen == 'look') {
+                function npcOnLook () {
+                    if (npcTarget.talkCounter === 0) {
+                    textTarget.append(npcTarget.prepose)
+                    textTarget.append(npcText)
+                    textTarget.append(npcTarget.describeNpc)
+                    npcText.addEventListener('click', player.npcGreetPrompt)
+                    } else {
+                        textTarget.innerText = `${npcTarget.name} ${npcTarget.dismiss}` 
+                    }
+                } npcOnLook()
+            }
+        }
+    }checkNpc()
+},
+
+}
+//end player brace ^ belongs there fr fr
+
 //Non-hoisted class declarations declared in global scope for access later
 //+function gameInit () {loadMap(), populateItems()}
 // itemInit()

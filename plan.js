@@ -40,26 +40,30 @@ class Book extends Items {
     }
 }
 class Door {
-    constructor(name, describeDoor, objStr, requires) {
+    constructor(name, describeDoor, objStr, requires, makeAdjacentRoom, direction) {
     this.name = name,
     this.describeDoor = describeDoor,
     this.objStr = objStr,
-    this.requires = requires;
+    this.requires = requires,
+    this.makeAdjacentRoom = makeAdjacentRoom,
+    this.direction = direction
     }
 }
 class Npc {
-    constructor(name, whenSeen, prepose, describeNpc, inventory) {
+    constructor(name, whenSeen, prepose, describeNpc, inventory, talkCounter, dismiss) {
         this.name = name,
         this.whenSeen = whenSeen,
         this.prepose = prepose,
         this.describeNpc = describeNpc,
-        this.inventory = inventory 
+        this.inventory = inventory, 
+        this.talkCounter = talkCounter,
+        this.dismiss = dismiss
     }
 }
 
 let brassKey = new Items ('a patinated brass key', 'An old brass key, the air has done violence to its chemistry','brassKey', 'Does this ever come up? Will it be referenced?')
-let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard', [brassKey])
-let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey)
+let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard', [brassKey], 0, 'looks agitated by your continued stay in his presence and motions you away')
+
 
 /*
 class Book extends Items {
@@ -101,6 +105,8 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
 
 //ITEMS SHOULD APPEAR IN LOOK() OR ROOM DESCRIPTION, AND DESCRIPTION AND LOOK SHOULD UPDATE TO NEW TEXT REFLECTING ITEMS ARE NOT THERE. 
 //Should I use a template literal to reference roomExits foor lookTarget? Potential problem with declaration
+    let outside = new Room (['south'], ['west'], 'You won the game, to heck with looking for Elizabeth', 'win', this.roomCounter, false, false, false)
+    let winRoom = new Room (['west'], [], 'You hear a click as the lock disengages, and are surprised when the doorknob rotates with a complete absence of resistance. You briefly take your hand off the door to reconsider your options, but the heavy mahogony door swings open, as if by its own volition. To your surprise, the doorway opens into a dark foyer, the chandelier hanging lightless in the center of two grand staircases.', 'You see a door to the south which leaves this weird place')
     let grove = new Room (['south'], [], 'You get on your hands and knees and begin to crawl through the thicket, feeling the occasional rose-thorn trail across your skin. You find yourself in a dimly lit alcove of sorts, a thick mat of moss covering the spongey and pungent earth. Strange mutterings float from the far side of the alcove', 'You turn your head to investigate the source of the sound, scanning the shadows. ')
     let garden = new Room (['south', 'north'], [pewterKey], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den. ')
     let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north. ')
@@ -150,10 +156,20 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
         nextRoomDirection: ['north'],
         nextRoom: [hallway],
     }
+    let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey, winRoom, 'east')
+    let winDoor = new Door ('massive french door', 'which exits the house', 'winDoor')
     library.state = {
         stateTwoDescribe: 'You have entered the library where you woke up. Curiously, the configuration of the room seems to have changed.',
         stateTwoDoor: secretDoor 
     }
+    grove.state = {
+        stateTwoDescribe: 'lorem ipsum lorem ipsum lorem ipsum lorem lorem rdfk;lsdfgj;asdgkjasgsaldgfas;dglaskdg;kjas;dklgj'
+    }
+    winDoor.adjacentRoom = {
+        nextRoomDirection: ['south', 'west'],
+        nextRoom: [outside, library]
+    }
+  
     //POPULATE NPCS 
     grove.hasNpc = true;
     grove.npc = oldMan;
@@ -175,7 +191,10 @@ let gameState = {
             library.roomDescription = library.state.stateTwoDescribe
             library.hasDoor = true
             library.door = secretDoor
-            library.roomExits.push('east')
+            //library.roomExits.push('east')
+            
+            grove.roomDescription = grove.state.stateTwoDescribe
+            
         } else {
             console.log('state one')
         }
@@ -208,8 +227,6 @@ let oldManConversation = {
         let conv2 = document.querySelector('#convo2')
         let conv3 = document.querySelector('#convo3')
         if (disposition == 'cordial' && this.placeCounter < 4) {
-            console.log('under 4')
-            console.log(this.placeCounter)
             npcTalk.textContent = this.npcSpeech.cordial[this.placeCounter]
         } else if (disposition == 'somber' && this.placeCounter < 4) {
             npcTalk.textContent = this.npcSpeech.somber[this.placeCounter]
@@ -298,8 +315,6 @@ let oldManConversation = {
     
     }*/
 }
-console.log(oldManConversation)
-console.log(oldManConversation.npcSpeech.cordial[0],oldManConversation.npcSpeech.somber[1])
 let player = {
     inventory: [],
     currentLocation: library,
@@ -412,8 +427,8 @@ let player = {
                             return                             //player.equippedItem.push(item)
                             
                             
-                }
-            }
+                        }
+                    }
                 }
             })
             
@@ -471,6 +486,7 @@ let player = {
                     entryText.append(getDoor)
                     entryText.append(player.currentLocation.door.describeDoor)
                     //entryText.append(door.where)
+                    
                     let requiresVar = door.requires
                     getDoor.addEventListener('click', function () {
                         if (player.equippedItem[0] === door.requires) {
@@ -499,16 +515,18 @@ let player = {
         conversationModal.style.visibility = "visible"
         console.log(conversationModal)
         oldManConversation.initConvo()
+        oldMan.talkCounter += 1
     },
     npcGreetPrompt() {
-        let greetButton = document.querySelector('#greet')
-        let actionButton = document.querySelector('#do-action')
-        actionButton.style.visibility = "hidden"
-        greetButton.style.visibility = "visible"
-        greetButton.textContent = `Greet the ${player.currentLocation.npc.name}`
-        greetButton.addEventListener('click', this.startConversation)
-        console.log('function invoked')
-        
+        if (oldMan.talkCounter === 0) {
+            let greetButton = document.querySelector('#greet')
+            let actionButton = document.querySelector('#do-action')
+            actionButton.style.visibility = "hidden"
+            greetButton.style.visibility = "visible"
+            greetButton.textContent = `Greet the ${player.currentLocation.npc.name}`
+            greetButton.addEventListener('click', this.startConversation)
+            console.log('function invoked')
+        }
     },
     look() {
         uponAction.style.visibility = "visible"
@@ -523,7 +541,6 @@ let player = {
                     npcText.classList.add('get-item-style')
                 if (npcTarget.whenSeen == 'look') {
                     function npcOnLook () {
-                        console.log('onlook')
                         textTarget.append(npcTarget.prepose)
                         textTarget.append(npcText)
                         textTarget.append(npcTarget.describeNpc)
