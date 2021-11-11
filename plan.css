@@ -108,7 +108,7 @@ body {
 }
 #room-entry-description {
     font-family: American Typewriter, serif;
-    display: none;
+    visibility: hidden;
     font-size: 20px;
     grid-row-start: 2;
     grid-row-end: 3;
@@ -120,7 +120,7 @@ body {
 }
 
 #upon-action {
-    display: none;
+    visibility: hidden;
     font-family: American Typewriter, serif;
     grid-row-start: 4;
     grid-row-end: 5;

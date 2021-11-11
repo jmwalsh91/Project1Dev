@@ -6,13 +6,14 @@
 //
 
 class Room { 
-    constructor(roomExits, roomItems, roomDescription, lookTarget, roomCounter) {
+    constructor(roomExits, roomItems, roomDescription, lookTarget, roomCounter, hasDoor, door) {
     this.roomExits = roomExits;
     this.roomItems = roomItems;
     this.roomDescription = roomDescription;
     this.lookTarget = lookTarget;
     this.roomCounter = 0;
-
+    this.hasDoor = hasDoor,
+    this.door = door
     }
 }
 //item class, work in progress
@@ -38,6 +39,14 @@ class Book extends Items {
         }*/
     }
 }
+class Door {
+    constructor(name, describeDoor, objStr, requires) {
+    this.name = name,
+    this.describeDoor = describeDoor,
+    this.objStr = objStr,
+    this.requires = requires;
+    }
+}
 class Npc {
     constructor(name, whenSeen, prepose, describeNpc, inventory) {
         this.name = name,
@@ -50,6 +59,8 @@ class Npc {
 
 let brassKey = new Items ('a patinated brass key', 'An old brass key, the air has done violence to its chemistry','brassKey', 'Does this ever come up? Will it be referenced?')
 let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard', [brassKey])
+let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey)
+
 /*
 class Book extends Items {
     constructor(itemName, lookTarget,pages, bookText) {
@@ -139,7 +150,10 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
         nextRoomDirection: ['north'],
         nextRoom: [hallway],
     }
-
+    library.state = {
+        stateTwoDescribe: 'You have entered the library where you woke up. Curiously, the configuration of the room seems to have changed.',
+        stateTwoDoor: secretDoor 
+    }
     //POPULATE NPCS 
     grove.hasNpc = true;
     grove.npc = oldMan;
@@ -154,6 +168,16 @@ let gameState = {
             return this.oldManBoolean = true 
         } else {
             return this.oldManBoolean = false
+        }
+    },
+    updateMap() {
+        if (this.oldManBoolean === true) {
+            library.roomDescription = library.state.stateTwoDescribe
+            library.hasDoor = true
+            library.door = secretDoor
+            library.roomExits.push('east')
+        } else {
+            console.log('state one')
         }
     }
 }
@@ -203,7 +227,8 @@ let oldManConversation = {
                 let actionButton = document.querySelector('button#do-action')
                 actionButton.style.visibility = "visible"
                 actionButton.innerHTML = `Take ${oldMan.inventory[0].itemName} and leave conversation`
-                actionButton.addEventListener('click', restoreAndUpdate = () =>  {
+                
+                actionButton.addEventListener('click', function restoreAndUpdate()  {
                      console.log('works')
                      let item = oldMan.inventory[0]
                      player.inventory.push(oldMan.inventory[0])
@@ -219,6 +244,7 @@ let oldManConversation = {
                         actionButton.style.visibility = "hidden"
                     }
                     gameState.oldManState()
+                    
                     //EVERYTHING BUT INSPECT MATCH WORKS, still need nonbook equip item action button
 
                     
@@ -285,48 +311,69 @@ let player = {
     inventory: [],
     currentLocation: library,
     equippedItem: [],
-    equipItem(item) {
-        console.log(this.equippedItem.length)
-        if (this.equippedItem.length === 1) {
-            this.inventory.push(this.equippedItem[0])
-            this.equippedItem.pop()
-            this.equippedItem.push(item)
-            this.inventory.pop(item)
-        } else if (this.equippedItem.length === 0) {
-            this.equippedItem.push(item)
-            this.inventory.pop(item)      
+    bookPopUp() {
+        let bookModal = document.querySelector('#book-modal')
+        let actionButton = document.querySelector('button#do-action')
+        if (bookModal.style.visibility === 'hidden'){
+        bookModal.innerHTML = player.equippedItem[0].bookText
+        bookModal.style.visibility = 'visible'
+        actionButton.innerHTML = `Close ${player.equippedItem[0].bookTitle}`
+        console.log('first if was hit')
+    } else if (bookModal.style.visibility === 'visible'){
+        bookModal.style.visibility = 'hidden'
+        actionButton.innerHTML = `Read ${player.equippedItem[0].bookTitle}`
+        console.log('else was hit')
+        } else {
+            console.log('no visibility style')
         }
-        player.playerActionOption()
+    },
+    equipItem(item) {
+        let playerInventory = player.inventory
+        //let equippedArray = player.equippedItem
+        let actionButton = document.querySelector('button#do-action')
+        actionButton.removeEventListener('click', this.bookPopUp) 
+        console.log(item.itemName + 'before loop  ' + playerInventory )
+        if (player.equippedItem.length === 1) {
+            player.inventory.push(player.equippedItem[0])
+            player.equippedItem.pop()
+            player.equippedItem.push(item)
+            let removeFromInventory = this.inventory.findIndex(obj => obj === item)
+            this.inventory.splice(removeFromInventory,1)
+            //player.inventory.pop(item)
+            console.log('equip IF hit!')
+            player.playerActionOption()
+            return
+        } else if (player.equippedItem.length === 0) {
+         console.log(item.itemName)
+         this.equippedItem.push(item)
+         let removeFromInventory = this.inventory.findIndex(obj => obj === item)
+         this.inventory.splice(removeFromInventory,1)
+         player.playerActionOption()
+         return
+         //console.log(this.inventory.findIndex('item'))
+        }
+        
     },
     playerActionOption() {
         let actionButton = document.querySelector('button#do-action')
-        //check if book
-        if ((this.equippedItem.length === 1) && this.equippedItem[0] instanceof Book === true) {
+        //check i
+        if (this.equippedItem[0] instanceof Book === false) {
+            actionButton.innerHTML = `you have ${this.equippedItem[0].itemName} equipped.`
+            actionButton.style.visibility = "visible"
+            return
+            
+        } else if (this.equippedItem[0] instanceof Book === true) {
             let bookModal = document.querySelector('#book-modal')
             actionButton.innerHTML = `Read ${this.equippedItem[0].bookTitle}`
             actionButton.style.visibility = "visible"
             bookModal.style.visibility = "hidden"
             console.log(bookModal.style)
-            actionButton.addEventListener('click', function () {
-                if (bookModal.style.visibility === 'hidden'){
-                bookModal.innerHTML = player.equippedItem[0].bookText
-                bookModal.style.visibility = 'visible'
-                actionButton.innerHTML = `Close ${player.equippedItem[0].bookTitle}`
-                console.log('first if was hit')
-            } else if (bookModal.style.visibility === 'visible'){
-                bookModal.style.visibility = 'hidden'
-                actionButton.innerHTML = `Read ${player.equippedItem[0].bookTitle}`
-                console.log('else was hit')
-                } else {
-                    console.log('no visibility style')
-                }
-            })
+            actionButton.addEventListener('click', this.bookPopUp)
             // doAction visible doAction innerText update doActionEventListenerClick [ refer to book] ReadBook()
         } else if ((this.equippedItem.length === 1) && (this.equippedItem instanceof Book === false)) {
             console.log(player.equippedItem)
         }
-    }
-    ,
+    },
     updateInventory(item) {
         //console.log(document.querySelector('#item-name').innerHTML) 
             if (document.querySelector('#item-name').innerHTML === 'Item Name') {
@@ -339,6 +386,7 @@ let player = {
       
             } else {
                 let nextInventoryElement = document.querySelector('li.inventory-item-element').cloneNode(true)
+                //can't inspect an element once while it is equipped, because it is no longer in inventory. Might as well remove the .li too?
                 nextInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
                 document.querySelector('li.inventory-item-element').after(nextInventoryElement);
                 nextInventoryElement.setAttribute('data-objectString', `${item.objString}`)
@@ -350,21 +398,23 @@ let player = {
                 let objStr = parent.getAttribute('data-objectstring')
                 if (e.target.innerHTML.includes('Inspect')) {
                     for (let i = 0; i < player.inventory.length; i++) {
-                        if (player.inventory[i].objString == objStr) {
+                        if (player.inventory[i].objString === objStr) {
                         uponAction.innerHTML = player.inventory[i].lookTarget
-                        uponAction.style.display = 'block';
+                        uponAction.style.visibility = "visible"
+                        return
                         } 
-                        else { 
-                            console.log('no match')
-                        }
+                       
                     }           
                 } if (e.target.innerHTML.includes('Equip')) {
+                    console.log('includes equip')
                     for (let i = 0; i < player.inventory.length; i++) {
                         if (player.inventory[i].objString == objStr) {
                             item = player.inventory[i]
-                            console.log(item)
-                            console.log(objStr)
+                            console.log('item in equip loop' + ' ' +item.objString)
+                            console.log('objStr in loop' + ' ' + objStr)
                             player.equipItem(item)
+                            return 
+
                             //player.equipItem(item)
                             return                             //player.equippedItem.push(item)
                             
@@ -381,6 +431,7 @@ let player = {
         console.log(player.inventory)
     },  
     move(direction) {
+        gameState.updateMap()
         if (player.currentLocation.roomExits.includes(direction)) {
             function changeRoom() {
                 let dirArr = player.currentLocation.adjacentRoom.nextRoomDirection;
@@ -393,7 +444,7 @@ let player = {
                     entryText.innerHTML = `${player.currentLocation.roomDescription}`
                 } 
                 entryText.innerHTML = `${player.currentLocation.roomDescription}`
-                entryText.style.display = 'block'
+                entryText.style.visibility = "visible"
                 player.currentLocation.roomCounter += 1
                 if (player.currentLocation.roomItems.length > 0 && player.currentLocation.roomItems.length < 2 ) {
                     let firstItem = player.currentLocation.roomItems[0]
@@ -407,11 +458,40 @@ let player = {
                     getFirstItem.addEventListener('click', function () {
                         player.getItem(firstItem)
                         player.updateInventory(firstItem)
+                        getFirstItem.removeEventListener('click', function () {
+                            player.getItem(firstItem)
+                            player.updateInventory(firstItem)
+                        })
                     })
                     //getFirstItem.addEventListener('click', player.updateInventory) 
                     getFirstItem.addEventListener('click', restoreEntryText)
                     
 
+                }
+                if (player.currentLocation.hasDoor === true) {
+                    let door = player.currentLocation.door
+                    console.log(door)
+                    let getDoor = document.createElement('p')
+                    getDoor.innerText = door.name
+                    getDoor.classList.add('get-item-style')
+                    entryText.innerHTML = player.currentLocation.roomDescription + `<br><br>You see `
+                    entryText.append(getDoor)
+                    entryText.append(player.currentLocation.door.describeDoor)
+                    //entryText.append(door.where)
+                    let requiresVar = door.requires
+                    getDoor.addEventListener('click', function () {
+                        if (player.equippedItem[0] === door.requires) {
+                            let actionButton = document.querySelector('button#do-action')
+                            actionButton.innerText = `Use the ${requiresVar.itemName} on ${door.name}`
+                        } else { 
+                            console.log(requiresVar)
+                            uponAction.innerText = `You jiggle the doorknob, but it is locked. You feel a cool breeze from the jamb-side of the door. Equip the ${requiresVar.itemName} to unlock.` 
+                            uponAction.style.visibility = "visible"
+                        
+                        } 
+                    })
+                    //getFirstItem.addEventListener('click', player.updateInventory) 
+                    //getDoor.addEventListener('click', restoreEntryText)
                 }
                  
             }
@@ -438,7 +518,7 @@ let player = {
         
     },
     look() {
-        uponAction.style.display = "block"
+        uponAction.style.visibility = "visible"
         uponAction.innerHTML = `${player.currentLocation.lookTarget}`
         function checkNpc() {
             if (player.currentLocation.hasNpc === true) {
@@ -473,19 +553,19 @@ const southButton = document.querySelector('#south')
 const westButton = document.querySelector('#west')
 northButton.addEventListener('click', function () {
     player.move('north')
-    uponAction.style.display = "none"
+    uponAction.style.visibility = "hidden"
 })
 eastButton.addEventListener('click', function () {
     player.move('east')
-    uponAction.style.display = "none"
+    uponAction.style.visibility = "hidden"
 })
 southButton.addEventListener('click', function () {
     player.move('south')
-    uponAction.style.display = "none"
+    uponAction.style.visibility = "hidden"
 })
 westButton.addEventListener('click', function () {
     player.move('west')
-    uponAction.style.display = "none"
+    uponAction.style.visibility = "hidden"
 })
 
 //LOOK
