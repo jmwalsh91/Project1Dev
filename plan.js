@@ -110,8 +110,8 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
 
 //ITEMS SHOULD APPEAR IN LOOK() OR ROOM DESCRIPTION, AND DESCRIPTION AND LOOK SHOULD UPDATE TO NEW TEXT REFLECTING ITEMS ARE NOT THERE. 
 //Should I use a template literal to reference roomExits foor lookTarget? Potential problem with declaration
-    let outside = new Room (['south','west'], [], 'You won the game, to heck with looking for Elizabeth', 'win', this.roomCounter)
-    let foyer = new Room (['west', 'south'], [], 'You hear a click as the lock disengages, and are surprised when the doorknob rotates with a complete absence of resistance. You briefly take your hand off the door to reconsider your options, but the heavy mahogony door swings open, as if by its own volition. To your surprise, the doorway opens into a dark foyer, the chandelier hanging lightless in the center of two grand staircases.', 'You see a door to the south which leaves this weird place')
+    let outside = new Room (['south'], ['west'], 'You won the game, to heck with looking for Elizabeth', 'win', this.roomCounter, false, false, false)
+    let winRoom = new Room (['west'], [], 'You hear a click as the lock disengages, and are surprised when the doorknob rotates with a complete absence of resistance. You briefly take your hand off the door to reconsider your options, but the heavy mahogony door swings open, as if by its own volition. To your surprise, the doorway opens into a dark foyer, the chandelier hanging lightless in the center of two grand staircases.', 'You see a door to the south which leaves this weird place')
     let grove = new Room (['south'], [], 'You get on your hands and knees and begin to crawl through the thicket, feeling the occasional rose-thorn trail across your skin. You find yourself in a dimly lit alcove of sorts, a thick mat of moss covering the spongey and pungent earth. Strange mutterings float from the far side of the alcove', 'You turn your head to investigate the source of the sound, scanning the shadows. ')
     let garden = new Room (['south', 'north'], [pewterKey], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den. ')
     let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north. ')
@@ -161,7 +161,7 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
         nextRoomDirection: ['north'],
         nextRoom: [hallway],
     }
-    let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey, foyer, 'east')
+    let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey, winRoom, 'east')
     let winDoor = new Door ('massive french door', 'which exits the house', 'winDoor')
     library.state = {
         stateTwoDescribe: 'You have entered the library where you woke up. Curiously, the configuration of the room seems to have changed.',
@@ -170,7 +170,10 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
     grove.state = {
         stateTwoDescribe: 'lorem ipsum lorem ipsum lorem ipsum lorem lorem rdfk;lsdfgj;asdgkjasgsaldgfas;dglaskdg;kjas;dklgj'
     }
-
+    winDoor.adjacentRoom = {
+        nextRoomDirection: ['south', 'west'],
+        nextRoom: [outside, library]
+    }
   
     //POPULATE NPCS 
     grove.hasNpc = true;
@@ -181,18 +184,6 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
 
 let gameState = {
     oldManBoolean: false,
-    secretDoorState() {
-        console.log('secretdoorstate hit')
-        library.roomExits.push('east')
-        foyer.adjacentRoom = {
-            nextRoomDirection: ['south', 'west'],
-            nextRoom: [outside, library]
-        },
-        library.adjacentRoom = {
-            nextRoomDirection: ['north', 'east'],
-            nextRoom: [hallway, foyer]
-        }
-    },
     oldManState() {
         if (oldManConversation.placeCounter == 4) {
             return this.oldManBoolean = true 
@@ -525,28 +516,20 @@ let player = {
                     entryText.innerHTML = player.currentLocation.roomDescription + `<br><br>You see `
                     entryText.append(getDoor)
                     entryText.append(player.currentLocation.door.describeDoor)
-                   
+                    //entryText.append(door.where)
+                    
                     let requiresVar = door.requires
-
-                    function checkDoor() {
+                    getDoor.addEventListener('click', function () {
                         if (player.equippedItem[0] === door.requires) {
                             let actionButton = document.querySelector('button#do-action')
                             actionButton.innerText = `Use the ${requiresVar.itemName} on ${door.name}`
-                                if (player.equippedItem[0] === door.requires){
-                                    function unlockDoor() {
-                                        console.log('this should change gamestate')
-                                        gameState.secretDoorState()
-                                    }
-                                    actionButton.addEventListener('click', unlockDoor)
-                                }
                         } else { 
                             console.log(requiresVar)
                             uponAction.innerText = `You jiggle the doorknob, but it is locked. You feel a cool breeze from the jamb-side of the door. Equip the ${requiresVar.itemName} to unlock.` 
                             uponAction.style.visibility = "visible"
                         
                         } 
-                    }
-                    getDoor.addEventListener('click', checkDoor)
+                    })
                     //getFirstItem.addEventListener('click', player.updateInventory) 
                     //getDoor.addEventListener('click', restoreEntryText)
                 }
