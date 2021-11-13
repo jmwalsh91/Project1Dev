@@ -4,11 +4,16 @@
 // 
 //
 //
-
+/*
+window.addEventListener('resize', () => {
+    let vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+}
+*/
 class Room { 
     constructor(roomExits, roomItems, roomDescription, lookTarget, roomCounter, hasDoor, door) {
-    this.roomExits = roomExits;
-    this.roomItems = roomItems;
+    this.roomExits = roomExits,
+    this.roomItems = roomItems,
     this.roomDescription = roomDescription;
     this.lookTarget = lookTarget;
     this.roomCounter = 0;
@@ -230,6 +235,21 @@ let oldManConversation = {
     }, 
     placeCounter: -1,
     playerCounter: 0,
+    fixTheWorld (){
+        console.log('Why did this not fix the world')
+        let fixTheWorld = document.querySelector('body')
+        fixTheWorld.style.cssText = `
+        background-color: black;
+        font-family: American Typewriter, serif;
+        display: grid;
+        max-height: 100%;
+        max-width: 98vw;
+        grid-template-columns: 1fr 4fr 4fr 4fr 4fr 1fr;
+        grid-template-rows: .5fr 7.5fr 2fr 4fr 2fr;
+        row-gap: 1.5vh;
+        column-gap: 10px;"
+        `
+    },
     advanceConvo(disposition){
         let npcTalk = document.querySelector('#npc-speech')
         let conv1 = document.querySelector('#convo1')
@@ -242,10 +262,18 @@ let oldManConversation = {
         } else if (disposition == 'standoffish' && this.placeCounter < 4) {
             npcTalk.textContent = this.npcSpeech.standoffish[this.placeCounter]
         } else if (oldManConversation.placeCounter === 4) {
+            
             npcTalk.textContent = this.closer[0]
-            conv1.style.visibility = "hidden"
+            conv1.style.display = "none"
+            conv2.style.display = "none"
+            conv3.style.display = "none"
+
+            /*conv1.style.visibility = "hidden"
             conv2.style.visibility = "hidden"
-            conv3.style.visibility = "hidden"
+            conv3.style.visibility = "hidden"*/
+            if (window.innerWidth < 420) {
+                npcTalk.style.fontSize = "1vh"
+            }
 
             function leaveConvo () {
                 let greetButton = document.querySelector('#greet')
@@ -266,6 +294,9 @@ let oldManConversation = {
                         actionButton.style.visibility = "hidden"
                     }
                     gameState.oldManState()
+                    this.fixTheWorld()
+                    //uponAction.style.visibility = "visible"
+                    //Why is this not needed ^ ? 
                     actionButton.removeEventListener('click', restoreAndUpdate)
                 }
                 actionButton.addEventListener('click', restoreAndUpdate)
@@ -530,6 +561,7 @@ let player = {
     startConversation () {
         let conversationModal = document.querySelector('#conversation-modal')
         conversationModal.style.visibility = "visible"
+        uponAction.style.visibility = "hidden"
         console.log(conversationModal)
         oldManConversation.initConvo()
         oldMan.talkCounter += 1

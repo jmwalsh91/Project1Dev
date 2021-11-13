@@ -1,3 +1,7 @@
+
+@media only screen 
+    and (min-device-width: 800px)
+    {
 body {
     background-color: black;
     font-family: American Typewriter, serif;
@@ -304,3 +308,363 @@ body {
     visibility: hidden;
 }
 */
+}
+@media screen
+ and (min-device-width: 320px)
+ and (max-device-width: 420px) {
+    
+    body {
+        background-color: black;
+        font-family: American Typewriter, serif;
+        display: grid;
+        max-height: 100%;
+        max-width: 98vw;
+        grid-template-columns: 1fr 4fr 4fr 4fr 4fr 1fr;
+        grid-template-rows: .5fr 7.5fr 2fr 4fr 2fr;
+        row-gap: 1.5vh;
+        column-gap: 10px;
+        cursor: pointer;
+        
+    }
+    .selected {
+        /* make background height fit text, width static */
+        background-size: auto;
+        
+        border: 2px solid black;
+        border-radius: .7em;
+        padding: 1vw;
+        margin: 0 auto;
+        text-align: center;
+    }
+    #user-view {
+        position:sticky;
+        max-width: 100%;
+        max-height: 50%%;
+        
+        background-color: black;
+        color: rgba(194,181,155,1);
+        font-family: American Typewriter, serif;
+        margin: 0 auto;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 6;
+        display: grid;
+        grid-template-columns: 8% 7% 70% 8% 7%;
+        grid-template-rows: 1fr 60% 1fr 20% 1fr;
+    }
+    #book-modal {
+        font-family: American Typewriter, serif;
+        font-size: 23px;
+        padding: 10px;
+        text-align: center;
+        display:grid;
+        justify-content: center;
+        z-index: 1;
+        visibility: hidden;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 6;
+        background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        outline-offset: -10px;
+        border: 5px solid black;
+    }
+    #conversation-modal {
+        font-family: American Typewriter, serif;
+        background-color: black;
+        padding: 0px;
+        display:grid;
+        z-index: 1;
+        visibility: hidden;
+        grid-row-start: 2;
+        grid-row-end: 6;
+        grid-column-start: 2;
+        grid-column-end: 6;
+        grid-template-columns:10% 80% 10%;
+        grid-template-rows: 3% minmax(10px,40px) repeat(3, fit-content(15%)) 3%;
+        overflow-y: scroll;
+        
+    }
+    #conversation-modal > button {
+        font-family: American Typewriter, serif;
+        background: rgba(194,181,155,1);
+        border-radius: .6em;
+        padding: 0px 1px 2px 1px;
+        font-size: 2.5vw;
+    }
+    #npc-speech {/*
+        place-self: center;
+        font-size: clamp(1.5vw, 2.8vw, 3vw);
+        text-align: center;
+        */
+        font-size: clamp(1.5vw, 2.8vw, 3vw);
+        width: 90%;
+        grid-row-start: 1;
+        grid-row-end: 4;
+        grid-column-start: 1;
+        grid-column-end: 4;
+        background-color: black;
+        color: rgba(194,181,155,.5);
+        overflow-y: scroll;     
+    }
+    #npc-speech > p {
+        overflow-y: scroll;
+    }
+
+    #closer-modal {
+        visibility: hidden;
+        font-family: American Typewriter, serif;
+        font-size: 2vh;
+        font-size: clamp(1.5vw, 2.8vw, 3vw);
+        color: rgba(194,181,155,.5);
+        background-color: black;
+        padding: 0px;
+        z-index: 1;
+        max-height: 80px;
+
+    }
+    #convo1 {
+        grid-row-start: 3;
+        grid-row-end: 4;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+    #convo2 {
+        grid-row-start: 4;
+        grid-row-end: 5;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+    #convo3 {
+        grid-row-start: 5;
+        grid-row-end: 6;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+    
+    #conversation-modal > button:hover {
+        background-color: black;
+        color: rgba(194,181,155,1);
+    }
+    #room-entry-description {
+        font-family: American Typewriter, serif;
+        visibility: hidden;
+        font-size: 3vw;
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 5;
+    }
+    #room-entry-description:hover {
+        cursor: grab;
+    }
+    
+    #upon-action {
+        visibility: hidden;
+        font-family: American Typewriter, serif;
+        font-size: 2.5vw;
+        grid-row-start: 4;
+        grid-row-end: 5;
+        grid-column-start: 2;
+        grid-column-end: 5;
+        background-color: black;
+    }
+    .move-directions {
+        position: sticky;
+        border: none;
+        margin: 0 auto;
+        display: grid;  
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-row-gap:    5px;
+        grid-column-gap: 5px; 
+        grid-row-start: 3;
+        grid-row-end: 4;
+        grid-column-start: 2;
+        grid-column-end: 4;
+    }
+    .move-directions > button {
+        background-color:rgba(194,181,155,1);
+        font-size: 4vw;
+        font-family: American Typewriter, serif;
+    }
+    
+    #north {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        
+    }
+    #east {
+        grid-column-start: 3 ;
+        grid-column-end: 4;
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+    #south {
+        grid-column-start: 2 ;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+    #west {
+        grid-column-start: 1 ;
+        grid-column-end: 2 ;
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+    .player-actions {
+        grid-row-start: 3;
+        grid-row-end: 4;
+        grid-column-start: 4;
+        grid-column-end: 6;
+        display: grid;
+        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 30% 40% 30%;
+        row-gap: 5px;
+    }
+    .player-actions > button {
+        font-family: American Typewriter, serif;
+        background: rgba(194,181,155,1);
+        font-size: 3vw;
+    }
+    .player-actions > button:hover {
+        background-color: black;
+        color: rgba(194,181,155,1);
+    }
+    
+    
+    #do-action {
+        grid-column-start: 1;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        visibility: hidden;
+    }
+    #look {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        grid-row-start: 2;
+        grid-row-end: 3;
+    }
+    #greet {
+        visibility: hidden;
+        z-index: + 1;
+        grid-column-start: 1;
+        grid-column-end: 4;
+        grid-row-start: 1;
+        grid-row-end: 2;
+            
+        
+    }
+    .player-inventory {
+        font-family: American Typewriter, serif;
+        grid-column-start: 4;
+        grid-column-end: 6;
+        grid-row-start: 4;
+        grid-row-end: 6;
+        display: grid;
+        grid-template-rows: 7% 1fr 10%;
+        grid-template-columns: 5% 90% 5%;
+        align-items: start;
+        justify-items: start;
+        
+        
+    }
+    .player-inventory > h2 {
+        text-align: center;
+        font-family: American Typewriter, serif;
+        font-size: 4vw;
+        color: rgba(194,181,155,1);
+        margin: 0 auto;
+    }
+    .player-inventory > ul {
+        text-align: center;
+        justify-content: space-around;
+        display:grid;
+        display: block;
+        justify-content: space-around;
+        grid-template-rows: 7% 1fr 10%;
+        grid-template-columns: 5% 90% 5%;
+        overflow-y: auto;
+    }
+    #inventory-list {
+        text-align: center;
+        font-family: American Typewriter, serif;
+        row-gap: 1vh;
+        
+    }
+    .inventory-item-element {
+        grid-row-start: 2;
+        grid-row-end: 3;
+        display: grid;
+        grid-template-rows: 2;
+        grid-template-columns: 2;
+        column-gap: 3vw;
+        visibility: hidden;
+    }
+    .inventory-item-element > button {
+        font-family: American Typewriter, serif;
+        background: rgba(194,181,155,1);
+        font-size: 3vw;
+    }
+    .inventory-item-element > button:hover {
+        background-color: black;
+        color: rgba(194,181,155,1);
+        cursor: grabbing;
+    }
+    .inventory-item-element > #item-name {
+        font-size: 3vw;
+        grid-row-start: 1;
+        grid-row-end: 2;
+        grid-column-start: 1;
+        grid-column-end: 3;
+        font-family: American Typewriter, serif;
+        color: rgba(194,181,155,1);
+        margin: 0 auto;
+    }
+    .inventory-item-element > #inspect {
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 1;
+        grid-column-end: 2;
+    }
+    .inventory-item-element > #equip {
+        grid-row-start: 2;
+        grid-row-end: 3;
+        grid-column-start: 2;
+        grid-column-end: 3;
+    }
+    
+    .get-item-style {
+        font-family: American Typewriter, serif;
+        display: inline;
+        font-size: 3vw;
+        color: black;
+        transition-duration: .2s;
+        text-emphasis: italic;
+        background-color: rgba(194,181,155,.5);
+        padding: 0px 10px 0px 8px;
+        border-radius: .3em;
+    }
+    
+    .get-item-style:hover {
+        background-color: black;
+        color: rgba(194,181,155,1);
+        cursor: grabbing;
+    }
+    .gone-item-style {
+        display: none;
+    }
+    /*
+    .hide {
+        visibility: hidden;
+    }
+    */
+    
+
+}
