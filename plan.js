@@ -1,15 +1,9 @@
-//Non-hoisted class declarations declared in global scope for access later
-//+function gameInit () {loadMap(), populateItems()}
-// itemInit()
-// 
-//
-//
-/*
+/* 
 window.addEventListener('resize', () => {
     let vh = window.innerHeight * 0.01;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
-}
-*/
+} */
+
 class Room { 
     constructor(roomExits, roomItems, roomDescription, lookTarget, roomCounter, hasDoor, door) {
     this.roomExits = roomExits,
@@ -21,14 +15,12 @@ class Room {
     this.door = door
     }
 }
-//item class, work in progress
 class Items {
     constructor(itemName, lookTarget, objString, where) {
     this.itemName = itemName,
     this.lookTarget = lookTarget,
     this.objString = objString
     this.where = where;
-    
     }
 }
 class Book extends Items {
@@ -36,12 +28,7 @@ class Book extends Items {
         super(itemName, lookTarget, objString, where)
         this.pages = pages,
         this.bookTitle = bookTitle,
-        this.bookText = bookText/*,
-        function readBook() {
-            let bookModal = document.querySelector('#book-modal')
-                bookModal.innerHTML = player.equippedItem[0].bookText
-                bookModal.style.visibility = 'visible'
-        }*/
+        this.bookText = bookText
     }
 }
 class Door {
@@ -68,67 +55,25 @@ class Npc {
 
 let brassKey = new Items ('a patinated brass key', 'An old brass key, the air has done violence to its chemistry','brassKey', 'Does this ever come up? Will it be referenced?')
 let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard', [brassKey], 0, 'looks agitated by your continued stay in his presence and motions you away')
-
-
-/*
-class Book extends Items {
-    constructor(itemName, lookTarget,pages, bookText) {
-        super(itemName, lookTarget);
-        this.pages = pages,
-        this.bookText = bookText
-    }
-   
-    //Was thinking of a static method, but remembered that this. would refer to the class rather than the object intended. Maybe I can bind or solve this in the function? Something whacky like moving book to player.hands, which can only have an array length of 1, and then referencing player.hands[0] inside the read function?
-}*/
 let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 'dustyBook', 'laying haphazard on the ground', 1, `"Journal of Albion Moonlight"` ,`My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`);
-
 let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...', 'letterOpener', 'glimmering on a dusty side-table');
 let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been made to mimic a key that is now lost', 'pewterKey', 'jutting out of the night-black peat of the gardenbed')
 
-
-/*dustyBook = {
-    //books should have pages = num , and readBook() should bring up a modal z-indexed (above or before) userView. 
-    readBook(book) {
-        let bookModal = document.querySelector('#book-modal')
-        bookModal.innerText = dustyBook.bookText;
-        bookModal.style.display = 'block';
-        
-    }
-}*/
-// //ITEMS declared in global scope for testing
-// ITEM functionality. 
-//Needs to render in DOM for roomDescription or lookTarget, be selectable, update player-action when selected to "pick up", ? update look-button target when selected?, after pick up should revert to player action display none and look-button target room
-
-/*let secretDoor = {
-    isLocked: true,
-    unlock() {
-        let wayToEnd = 'east'
-        library.roomExits.push(wayToEnd)
-    }
-}
-*/
-
-//ITEMS SHOULD APPEAR IN LOOK() OR ROOM DESCRIPTION, AND DESCRIPTION AND LOOK SHOULD UPDATE TO NEW TEXT REFLECTING ITEMS ARE NOT THERE. 
-//Should I use a template literal to reference roomExits foor lookTarget? Potential problem with declaration
-    let outside = new Room (['south'], ['west'], 'You won the game, to heck with looking for Elizabeth', 'win', this.roomCounter, false, false, false)
-    let winRoom = new Room (['west'], [], 'You hear a click as the lock disengages, and are surprised when the doorknob rotates with a complete absence of resistance. You briefly take your hand off the door to reconsider your options, but the heavy mahogony door swings open, as if by its own volition. To your surprise, the doorway opens into a dark foyer, the chandelier hanging lightless in the center of two grand staircases.', 'You see a door to the south which leaves this weird place')
-    let grove = new Room (['south'], [], 'You get on your hands and knees and begin to crawl through the thicket, feeling the occasional rose-thorn trail across your skin. You find yourself in a dimly lit alcove of sorts, a thick mat of moss covering the spongey and pungent earth. Strange mutterings float from the far side of the alcove', 'You turn your head to investigate the source of the sound, scanning the shadows. ')
-    let garden = new Room (['south', 'north'], [pewterKey], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den. ')
-    let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north. ')
-    let greatRoom = new Room (
+let outside = new Room (['south','west'], [], 'You won the game, to heck with looking for Elizabeth', 'win', this.roomCounter)
+let foyer = new Room (['west', 'south'], [], 'You hear a click as the lock disengages, and are surprised when the doorknob rotates with a complete absence of resistance. You briefly take your hand off the door to reconsider your options, but the heavy mahogony door swings open, as if by its own volition. To your surprise, the doorway opens into a dark foyer, the chandelier hanging lightless in the center of two grand staircases.', 'You see a door to the south which leaves this weird place')
+let grove = new Room (['south'], [], 'You get on your hands and knees and begin to crawl through the thicket, feeling the occasional rose-thorn trail across your skin. You find yourself in a dimly lit alcove of sorts, a thick mat of moss covering the spongey and pungent earth. Strange mutterings float from the far side of the alcove', 'You turn your head to investigate the source of the sound, scanning the shadows. ')
+let garden = new Room (['south', 'north'], [pewterKey], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den. ')
+let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north. ')
+let greatRoom = new Room (
         ['east', 'south'],
         [dustyBook], 
         'you walk into the great room and your gaze immediately rises to the top of the cathedral ceiling, great beams of rough hewn timber spanning the apex of this immense-feeling room',
          'A long, hardwood bartop occupies half the length of the western wall, behind which are shelves filled with spirits posessing indiscernable branding')
-    let kitchen = new Room (['east'], [], 'kitchen', 'smells off')
-    let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room, and there are super fancy portraits on the wall, and a lot of chotchkys', 'there is a bunch of stuff would you look at that now move on')
-    console.log(Room)
-    //this can be unlocked in conversation by calling the function below,
-    //library.hasDoor = true;
-    let hallway = new Room (['north','south'], [], 'Upon entering the hallway, you are most aware of what must be a centuries-worth of residue from tobacco smoke coating the peeling wallpaper, and the lack of cushion the matted persian rug below your feet provides you', 'this hallway looks like it looks, there are exits to the north and south.')
-    let library = new Room (['north'], [], 'this should appear after opening scene, and should update after player leaves, maybe using a counter for playerlocation.', 'this is what you see when you look at a room, and there is a dusty book') 
-
-    //after init rooms, add relationship to other rooms
+let kitchen = new Room (['east'], [], 'kitchen', 'smells off')
+let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room, and there are super fancy portraits on the wall, and a lot of chotchkys', 'there is a bunch of stuff would you look at that now move on')
+let hallway = new Room (['north','south'], [], 'Upon entering the hallway, you are most aware of what must be a centuries-worth of residue from tobacco smoke coating the peeling wallpaper, and the lack of cushion the matted persian rug below your feet provides you', 'this hallway looks like it looks, there are exits to the north and south.')
+let library = new Room (['north'], [], 'this should appear after opening scene, and should update after player leaves, maybe using a counter for playerlocation.', 'this is what you see when you look at a room, and there is a dusty book') 
+//could I keep this in a function in an array in gameState?
     grove.adjacentRoom = {
         nextRoomDirection: ['south'],
         nextRoom: [garden],
@@ -161,7 +106,7 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
         nextRoomDirection: ['north'],
         nextRoom: [hallway],
     }
-    let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey, winRoom, 'east')
+    let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey, foyer, 'east')
     let winDoor = new Door ('massive french door', 'which exits the house', 'winDoor')
     library.state = {
         stateTwoDescribe: 'You have entered the library where you woke up. Curiously, the configuration of the room seems to have changed.',
@@ -170,20 +115,26 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
     grove.state = {
         stateTwoDescribe: 'lorem ipsum lorem ipsum lorem ipsum lorem lorem rdfk;lsdfgj;asdgkjasgsaldgfas;dglaskdg;kjas;dklgj'
     }
-    winDoor.adjacentRoom = {
-        nextRoomDirection: ['south', 'west'],
-        nextRoom: [outside, library]
-    }
+
   
-    //POPULATE NPCS 
     grove.hasNpc = true;
     grove.npc = oldMan;
-    // add "originatesIn" to items, add originatesOn
-    //originatesIn is for 
-    //originatesOn is for template literal of roomDescription vs itemArray conditional
+  
 
 let gameState = {
     oldManBoolean: false,
+    secretDoorState() {
+        console.log('secretdoorstate hit')
+        library.roomExits.push('east')
+        foyer.adjacentRoom = {
+            nextRoomDirection: ['south', 'west'],
+            nextRoom: [outside, library]
+        },
+        library.adjacentRoom = {
+            nextRoomDirection: ['north', 'east'],
+            nextRoom: [hallway, foyer]
+        }
+    },
     oldManState() {
         if (oldManConversation.placeCounter == 4) {
             return this.oldManBoolean = true 
@@ -226,21 +177,6 @@ let oldManConversation = {
     }, 
     placeCounter: -1,
     playerCounter: 0,
-    fixTheWorld (){
-        console.log('Why did this not fix the world')
-        let fixTheWorld = document.querySelector('body')
-        fixTheWorld.style.cssText = `
-        background-color: black;
-        font-family: American Typewriter, serif;
-        display: grid;
-        max-height: 100%;
-        max-width: 98vw;
-        grid-template-columns: 1fr 4fr 4fr 4fr 4fr 1fr;
-        grid-template-rows: .5fr 7.5fr 2fr 4fr 2fr;
-        row-gap: 1.5vh;
-        column-gap: 10px;"
-        `
-    },
     advanceConvo(disposition){
         let npcTalk = document.querySelector('#npc-speech')
         let conv1 = document.querySelector('#convo1')
@@ -258,13 +194,6 @@ let oldManConversation = {
             conv1.style.display = "none"
             conv2.style.display = "none"
             conv3.style.display = "none"
-
-            /*conv1.style.visibility = "hidden"
-            conv2.style.visibility = "hidden"
-            conv3.style.visibility = "hidden"*/
-            if (window.innerWidth < 420) {
-                npcTalk.style.fontSize = "1vh"
-            }
 
             function leaveConvo () {
                 let greetButton = document.querySelector('#greet')
@@ -285,7 +214,6 @@ let oldManConversation = {
                         actionButton.style.visibility = "hidden"
                     }
                     gameState.oldManState()
-                    this.fixTheWorld()
                     //uponAction.style.visibility = "visible"
                     //Why is this not needed ^ ? 
                     actionButton.removeEventListener('click', restoreAndUpdate)
@@ -337,14 +265,7 @@ let oldManConversation = {
             this.advanceConvo(disposition)
             console.log(disposition)
         })
-
-    }/*
-    playerResponds() {
-    this.placeCounter += 1;
-    let responseTracker = document
-    if ()
-    
-    }*/
+    }
 }
 let player = {
     inventory: [],
@@ -416,12 +337,12 @@ let player = {
     updateInventory(item) {
         //console.log(document.querySelector('#item-name').innerHTML) 
             if (document.querySelector('#item-name').innerHTML === 'Item Name') {
-            let templateElement = (document.querySelector('li.inventory-item-element'));
-            let newInventoryElement = templateElement.cloneNode(true);
-            newInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
-            newInventoryElement.setAttribute('data-objectString', `${item.objString}`)
-            templateElement.replaceWith(newInventoryElement);
-            newInventoryElement.style.visibility = "visible";
+                let templateElement = (document.querySelector('li.inventory-item-element'));
+                let newInventoryElement = templateElement.cloneNode(true);
+                newInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
+                newInventoryElement.setAttribute('data-objectString', `${item.objString}`)
+                templateElement.replaceWith(newInventoryElement);
+                newInventoryElement.style.visibility = "visible";
       
             } else {
                 let nextInventoryElement = document.querySelector('li.inventory-item-element').cloneNode(true)
@@ -452,18 +373,13 @@ let player = {
                             console.log('item in equip loop' + ' ' +item.objString)
                             console.log('objStr in loop' + ' ' + objStr)
                             player.equipItem(item)
-                            return 
-
-                            //player.equipItem(item)
-                            return                             //player.equippedItem.push(item)
-                            
-                            
+                            return   
                         }
                     }
                 }
             })
             
-},
+    },
     getItem(item) {
         player.inventory.push(item)
         player.currentLocation.roomItems.pop(item)
@@ -516,20 +432,34 @@ let player = {
                     entryText.innerHTML = player.currentLocation.roomDescription + `<br><br>You see `
                     entryText.append(getDoor)
                     entryText.append(player.currentLocation.door.describeDoor)
-                    //entryText.append(door.where)
-                    
+                   
                     let requiresVar = door.requires
-                    getDoor.addEventListener('click', function () {
+
+                    function checkDoor() {
                         if (player.equippedItem[0] === door.requires) {
                             let actionButton = document.querySelector('button#do-action')
-                            actionButton.innerText = `Use the ${requiresVar.itemName} on ${door.name}`
+                            actionButton.innerText = `Use ${requiresVar.itemName} on ${door.name}`
+                                if (player.equippedItem[0] === door.requires){
+                                    function unlockDoor() {
+                                        uponAction.innerText = "You can now enter the room to the east, this should be applicable to more than one door"
+                                        gameState.secretDoorState()
+                                        //this ^ should use objstring-string functionality to be useable for more than one door
+                                        if (player.equippedItem.length == 1) {
+                                            player.playerActionOption()
+                                        } else if (player.equippedItem == 0) {
+                                            actionButton.style.visibility = "hidden"
+                                        }
+                                    }
+                                    actionButton.addEventListener('click', unlockDoor)
+                                }
                         } else { 
                             console.log(requiresVar)
                             uponAction.innerText = `You jiggle the doorknob, but it is locked. You feel a cool breeze from the jamb-side of the door. Equip the ${requiresVar.itemName} to unlock.` 
                             uponAction.style.visibility = "visible"
                         
                         } 
-                    })
+                    }
+                    getDoor.addEventListener('click', checkDoor)
                     //getFirstItem.addEventListener('click', player.updateInventory) 
                     //getDoor.addEventListener('click', restoreEntryText)
                 }

@@ -7,7 +7,7 @@ body {
     font-family: American Typewriter, serif;
     display: grid;
     grid-template-columns: 1fr 20% 40% 20% 1fr;
-    grid-template-rows: 1fr auto 2fr 5fr;
+    grid-template-rows: .25fr auto 2fr 5fr;
     row-gap: 15px;
     column-gap: 10px;
     cursor: pointer;
@@ -56,6 +56,7 @@ body {
     outline-offset: -10px;
     border: 5px solid black;
 }
+
 #conversation-modal {
     font-family: American Typewriter, serif;
     background-color: black;
@@ -339,8 +340,7 @@ body {
     #user-view {
         position:sticky;
         max-width: 100%;
-        max-height: 50%%;
-        
+        max-height: 50%;
         background-color: black;
         color: rgba(194,181,155,1);
         font-family: American Typewriter, serif;
@@ -371,6 +371,23 @@ body {
         background-repeat: no-repeat;
         outline-offset: -10px;
         border: 5px solid black;
+    }
+    #provide-fixed {
+        position: fixed;
+        z-index: 1;
+    }
+    #closer-modal {
+        position: fixed;
+        background-color: black;
+        background-size: 100% 100%;
+        color: rgba(194,181,155,1);
+        z-index: 10;
+        height: 100%;
+        width: 80vw;
+        left: 10vw;
+        right: 10vw;
+        text-align: center;
+        position: relative;
     }
     #conversation-modal {
         font-family: American Typewriter, serif;
