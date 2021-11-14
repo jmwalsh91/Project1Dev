@@ -69,10 +69,10 @@ let greatRoom = new Room (
         [dustyBook], 
         'you walk into the great room and your gaze immediately rises to the top of the cathedral ceiling, great beams of rough hewn timber spanning the apex of this immense-feeling room',
          'A long, hardwood bartop occupies half the length of the western wall, behind which are shelves filled with spirits posessing indiscernable branding')
-let kitchen = new Room (['east'], [], 'To say that the kitchen is in disarray would be an understatement: smaller than would be expected, culinary implements of all sorts are strewn about the room, the footprints of mice pock-marking heaps of spilt flour on the gouged hardwood floor. The doors of the hoosier cabinet appear to have been flung open with such force that the hinges are half-torn from the doors.', `A foul smell emanates from somewhere unknown, a strange blend of rancid game and honey. A needlework sign reading 'a place for every thing, every thing in its place' has been torn in half. A narrow door labeled 'Servant's Quarters' is locked. Exit back to the east.` )
-let dining = new Room (['north', 'south', 'west'], [], 'You are in a large, windowless dining room. The center of the room is occupied by a large single-slab table, with places set for three, with four spoons, forks, and knives surrounding each plate.', 'You feel your gorge rise as you notice the centerpiece of the table: a pyramid of deliberately stacked and rotting fruit. Exits north, south, and west.')
-let hallway = new Room (['north','south'], [], 'You find yourself in a long hallway. You are most aware of what must be the accumulation of centuries-worth of residue from tobacco smoke coating the peeling taupe wallpaper, and the lack of cushion the matted persian rug below your feet provides you', 'You notice several paintings of birds in cages, and there are exits to the north and south.')
-let library = new Room (['north'], [], 'A single hanging pendant light with stained-glass depictions of songbirds illuminates the sole wall not covered by bookshelves, its wallpaper featuring a repetition of peacocks, the ink of which, you surmise, is arsenic-based. ', `You feel as if you could stare at the wallpaper for hours`) 
+let kitchen = new Room (['east'], [], 'kitchen', 'smells off')
+let dining = new Room (['north', 'south', 'west'], [], 'you have entered a really fancy dining room, and there are super fancy portraits on the wall, and a lot of chotchkys', 'there is a bunch of stuff would you look at that now move on')
+let hallway = new Room (['north','south'], [], 'Upon entering the hallway, you are most aware of what must be a centuries-worth of residue from tobacco smoke coating the peeling wallpaper, and the lack of cushion the matted persian rug below your feet provides you', 'this hallway looks like it looks, there are exits to the north and south.')
+let library = new Room (['north'], [], 'this should appear after opening scene, and should update after player leaves, maybe using a counter for playerlocation.', 'this is what you see when you look at a room, and there is a dusty book') 
 //could I keep this in a function in an array in gameState?
     grove.adjacentRoom = {
         nextRoomDirection: ['south'],
@@ -113,7 +113,7 @@ let library = new Room (['north'], [], 'A single hanging pendant light with stai
         stateTwoDoor: secretDoor 
     }
     grove.state = {
-        stateTwoDescribe: 'The old man paces back and forth, chewing on his tongue. He buries his restless hands deep in his trouser pockets and seems oblivious to your presence. The alcove seems a deliberate construction, although the dense thicket that forms its impenetrable walls could hardly have been the product of a skilled gardener\'s plans. Suspended from a branch appears to be some sort of porcelain urn.'
+        stateTwoDescribe: 'lorem ipsum lorem ipsum lorem ipsum lorem lorem rdfk;lsdfgj;asdgkjasgsaldgfas;dglaskdg;kjas;dklgj'
     }
 
   
@@ -271,7 +271,6 @@ let player = {
     inventory: [],
     currentLocation: library,
     equippedItem: [],
-    currentQuest: 'you really should find out what is going on.',
     bookPopUp() {
         let bookModal = document.querySelector('#book-modal')
         let actionButton = document.querySelector('button#do-action')
@@ -455,7 +454,7 @@ let player = {
                                 }
                         } else { 
                             console.log(requiresVar)
-                            uponAction.innerText = `You jiggle the doorknob, but it is locked. You feel a cool breeze from the jamb-side of the door. Equip ${requiresVar.itemName} to unlock.` 
+                            uponAction.innerText = `You jiggle the doorknob, but it is locked. You feel a cool breeze from the jamb-side of the door. Equip the ${requiresVar.itemName} to unlock.` 
                             uponAction.style.visibility = "visible"
                         
                         } 
@@ -545,22 +544,6 @@ westButton.addEventListener('click', function () {
 const lookButton = document.querySelector('#look')
 lookButton.addEventListener('click', player.look)
 let uponAction = document.querySelector('#upon-action')
-let buttonArray = [northButton, eastButton, southButton, westButton, lookButton]
-
-function hideButtons() {
-    buttonArray.forEach((button) => {
-        button.style.visibility = "hidden"
-        console.log(button)
-    })
-}
-hideButtons()
-
-function showButtons() {
-    buttonArray.forEach((button) => {
-        button.style.visibility = "visible"
-        console.log(button)
-    })
-}
 
 //UPDATE AND MAKE VISIBLE PLAYER-ACTION
 //TWO STATES FOR ITEMS WITHOUT CLASS 'BOOK'
@@ -576,58 +559,16 @@ function showButtons() {
 //GETTERS
 //STATE.
 let start = document.querySelector('#start')
+let openingLibraryDescription = [`your dreams are filled with the sound of birds`, `you are laying supine on a vast plane`, `the shapes of the clouds that float before your eyes seem defined by a strange geometry`, 'everything that surrounds you has gone angular', 'and slowly dissolves into a recognizeable Victorian wallpaper, adorned with swirling arsenic peacocks.', `you awake in a library, with a door to the north, and each remaining wall filled corner-to-corner with shelves overflowing with unfamiliar books.`]
 
-/* northButton.style.visibility = "hidden"
-eastButton.style.visibility = "hidden"
-southButton.style.visibility = "hidden"
-westButton.style.visibility = "hidden"
- */
-
-let openingDescribe = document.querySelector('#room-entry-description')
-
-/* let textEvents = {
-    opening = {
-        libraryDescription = []
-    }
-
-} */
-let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'you are laying supine on a vast plane', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry', 'everything that surrounds you has gone angular', 'and slowly dissolves into a recognizeable Victorian wallpaper, adorned with swirling arsenic peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
- function begin() {
-    
-   
+function openingScene() {
+  
     let openingDescribe = document.querySelector('#room-entry-description')
-    
-   
-        let count = 1
-        let secondCount = 0 
-        let intId = setInterval(iterate,4000)
-        let secondIntId = setInterval(inIterate,4008)
-        openingDescribe.innerText = openingLibraryDescription[0]
-        openingDescribe.style.visibility = "visible"
-        start.style.display = "none"
-        openingDescribe.classList.add('fade-in-text')
-        openingDescribe.classList.add('event-text')
-        function inIterate () {
-            secondCount += 1
-            console.log('transition')
-            openingDescribe.classList.add('fade-in-text')
-            if (count == 5) {
-                clearInterval(secondIntId)
-            }
-        }
-        function iterate () {
-            console.log('element')
-            openingDescribe.innerText = openingLibraryDescription[count]
-            openingDescribe.classList.remove('fade-in-text')
-            count += 1
-            if (count == 6) {
-                showButtons()
-                clearInterval(intId)
-            } 
-        }
-
-       
+    //let text = openingLibraryDescription[i]
+    for (let i = 0; i < openingLibraryDescription.length; i++)
+        openingDescribe.innerText = openingLibraryDescription[i]
         
-    }
-//click -> 
-start.addEventListener('click', begin) 
+        //setTimeout(10000); 
+        //console.log(i)
+}
+start.addEventListener('click', openingScene()) 
