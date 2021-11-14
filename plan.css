@@ -1,14 +1,418 @@
 
 @media only screen 
-    and (min-device-width: 800px)
-    {
+and (min-device-width: 800px)
+{
+body {
+background-color: black;
+font-family: American Typewriter, serif;
+display: grid;
+grid-template-columns: 1fr 20% 40% 20% 1fr;
+grid-template-rows: .25fr auto 3fr 5fr;
+row-gap: 15px;
+column-gap: 10px;
+cursor: pointer;
+
+}
+.selected {
+/* make background height fit text, width static */
+background-size: auto;
+background-color: rgba(138,130,112,.9);
+border: 2px solid black;
+border-radius: .7em;
+padding: 10px;
+margin: 0 auto;
+text-align: center;
+}
+#user-view {
+width: 100%;
+height: 500px;
+background-color: black;
+font-family: American Typewriter, serif;
+margin: 0 auto;
+grid-row-start: 2;
+grid-row-end: 3;
+grid-column-start: 2;
+grid-column-end: 5;
+display: grid;
+grid-template-columns: 8% 7% 70% 8% 7%;
+grid-template-rows: 1fr 60% 1fr 20% 1fr;
+}
+#start {
+display: block;
+font-family: American Typewriter, serif;
+background-color: black;
+color: rgba(194,181,155,1);
+border-radius: .6em;
+font-size: 25px;
+grid-row-start: 4;
+grid-row-end: 5;
+grid-column-start: 3;
+grid-column-end: 4;
+}
+#start > button:hover {
+background-color: black;
+color: rgba(194,181,155,1);
+}
+
+
+#book-modal {
+font-family: American Typewriter, serif;
+font-size: 23px;
+padding: 10px;
+text-align: center;
+display:grid;
+justify-content: center;
+z-index: 1;
+visibility: hidden;
+grid-row-start: 1;
+grid-row-end: 6;
+grid-column-start: 1;
+grid-column-end: 6;
+background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg');
+background-size: 100% 100%;
+background-repeat: no-repeat;
+outline-offset: -10px;
+border: 5px solid black;
+}
+.event-text {
+background-color: black;
+color: rgba(194,181,155,.5);
+text-align: center;
+}
+#conversation-modal {
+font-family: American Typewriter, serif;
+background-color: black;
+font-size: 23px;
+padding: 10px;
+text-align: center;
+display:grid;
+z-index: 1;
+visibility: hidden;
+grid-row-start: 1;
+grid-row-end: 6;
+grid-column-start: 1;
+grid-column-end: 6;
+grid-template-columns: 5% 1fr 5% 1fr 5% 1fr 5%;
+grid-template-rows: 10% 5fr 5% 2fr 5%;
+}
+#conversation-modal > button {
+font-family: American Typewriter, serif;
+background: rgba(194,181,155,1);
+border-radius: .6em;
+font-size: 25px;
+}
+#npc-speech {
+grid-row-start: 2;
+grid-row-end: 3;
+grid-column-start: 2;
+grid-column-end: 7;
+background-color: black;
+color: rgba(194,181,155,.5);
+}
+
+#convo1 {
+grid-row-start: 4;
+grid-row-end: 5;
+grid-column-start: 2;
+grid-column-end: 3;
+}
+#convo2 {
+grid-row-start: 4;
+grid-row-end: 5;
+grid-column-start: 4;
+grid-column-end: 5;
+}
+#convo3 {
+grid-row-start: 4;
+grid-row-end: 5;
+grid-column-start: 6;
+grid-column-end: 7;
+}
+
+#conversation-modal > button:hover {
+background-color: black;
+color: rgba(194,181,155,1);
+}
+#room-entry-description {
+font-family: American Typewriter, serif;
+visibility: hidden;
+font-size: 20px;
+grid-row-start: 2;
+grid-row-end: 3;
+grid-column-start: 3;
+grid-column-end: 4;
+}
+#room-entry-description:hover {
+cursor: grab;
+}
+
+#upon-action {
+visibility: hidden;
+font-family: American Typewriter, serif;
+grid-row-start: 4;
+grid-row-end: 5;
+grid-column-start: 2;
+grid-column-end: 5;
+background-color: rgba(138,130,112,.9);
+}
+.move-directions {
+border: none;
+margin: 0 auto;
+display: grid;  
+grid-template-columns: 1fr 1fr 1fr;
+grid-template-rows: 1fr 1fr;
+grid-row-gap:    10px;
+grid-column-gap: 10px; 
+grid-row-start: 3;
+grid-row-end: 4;
+grid-column-start: 2;
+grid-column-end: 3;
+}
+.move-directions > button {
+background-color:rgba(194,181,155,1);
+font-size: 30px;
+font-family: American Typewriter, serif;
+}
+
+#north {
+grid-column-start: 2;
+grid-column-end: 3;
+grid-row-start: 1;
+grid-row-end: 2;
+
+}
+#east {
+grid-column-start: 3 ;
+grid-column-end: 4;
+grid-row-start: 2;
+grid-row-end: 3;
+}
+#south {
+grid-column-start: 2 ;
+grid-column-end: 3;
+grid-row-start: 2;
+grid-row-end: 3;
+}
+#west {
+grid-column-start: 1 ;
+grid-column-end: 2 ;
+grid-row-start: 2;
+grid-row-end: 3;
+}
+.player-actions {
+grid-row-start: 3;
+grid-row-end: 4;
+grid-column-start: 3;
+grid-column-end: 4;
+display: grid;
+grid-template-rows: 1fr 1fr;
+grid-template-columns: 30% 40% 30%;
+row-gap: 10px;
+}
+.player-actions > button {
+font-family: American Typewriter, serif;
+background: rgba(194,181,155,1);
+font-size: 25px;
+}
+.player-actions > button:hover {
+background-color: black;
+color: rgba(194,181,155,1);
+}
+
+
+#do-action {
+font-size: 16px;
+text-align: center;
+grid-column-start: 1;
+grid-column-end: 4;
+grid-row-start: 1;
+grid-row-end: 2;
+visibility: hidden;
+}
+#look {
+grid-column-start: 2;
+grid-column-end: 3;
+grid-row-start: 2;
+grid-row-end: 3;
+}
+#greet {
+visibility: hidden;
+z-index: + 1;
+grid-column-start: 1;
+grid-column-end: 4;
+grid-row-start: 1;
+grid-row-end: 2;
+    
+
+}
+.player-inventory {
+font-family: American Typewriter, serif;
+grid-column-start: 4;
+grid-column-end: 5;
+grid-row-start: 3;
+grid-row-end: 5;
+display: grid;
+grid-template-rows: 12% 1fr 10%;
+grid-template-columns: 2;
+align-items: start;
+justify-items: center;
+
+}
+.player-inventory > h2 {
+font-family: American Typewriter, serif;
+color: rgba(194,181,155,1);
+margin: 0 auto;
+}
+#inventory-list {
+text-align: center;
+font-family: American Typewriter, serif;
+display: grid;
+row-gap: 10px;
+}
+.inventory-item-element {
+display: grid;
+grid-template-rows: 2;
+grid-template-columns: 2;
+column-gap: 9px;
+visibility: hidden;
+}
+.inventory-item-element > button {
+font-family: American Typewriter, serif;
+background: rgba(194,181,155,1);
+font-size: 15px;
+}
+.inventory-item-element > button:hover {
+background-color: black;
+color: rgba(194,181,155,1);
+cursor: grabbing;
+}
+.inventory-item-element > #item-name {
+grid-row-start: 1;
+grid-row-end: 2;
+grid-column-start: 1;
+grid-column-end: 3;
+font-family: American Typewriter, serif;
+color: rgba(194,181,155,1);
+margin: 0 auto;
+}
+.inventory-item-element > #inspect {
+grid-row-start: 2;
+grid-row-end: 3;
+grid-column-start: 1;
+grid-column-end: 2;
+}
+.inventory-item-element > #equip {
+grid-row-start: 2;
+grid-row-end: 3;
+grid-column-start: 2;
+grid-column-end: 3;
+}
+
+.get-item-style {
+font-family: American Typewriter, serif;
+display: inline;
+font-size: 20px;
+color: black;
+transition-duration: .2s;
+text-emphasis: italic;
+background-color: rgba(194,181,155,.5);
+padding: 0px 10px 0px 8px;
+border-radius: .3em;
+}
+
+.get-item-style:hover {
+background-color: black;
+color: rgba(194,181,155,1);
+cursor: grabbing;
+}
+.gone-item-style {
+display: none;
+}
+.fade-in-text {
+color: rgba(194,181,155,.5);
+animation: fadeIn linear 2.5s;
+-webkit-animation: fadeIn linear 2.5s;
+-moz-animation: fadeIn linear 2.5s;
+-o-animation: fadeIn linear 2.5s;
+-ms-animation: fadeIn linear 2.5s;
+}
+
+@keyframes fadeIn {
+0% {opacity:0;}
+40% {opacity:1;}
+}
+
+@-moz-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-webkit-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-o-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+
+@-ms-keyframes fadeIn {
+0% {opacity:0;}
+100% {opacity:1;}
+}
+/* 
+.fade-out-text {
+color: black;
+animation: fadeIn linear 2.5s;
+-webkit-animation: fadeIn linear 2.5s;
+-moz-animation: fadeIn linear 2.5s;
+-o-animation: fadeIn linear 2.5s;
+-ms-animation: fadeIn linear 2.5s;
+}
+
+@keyframes fadeOut {
+
+40% {opacity:1;}
+0% {opacity:0;}
+}
+
+@-moz-keyframes fadeOut {
+
+100% {opacity:1;}
+0% {opacity:0;}
+}
+
+@-webkit-keyframes fadeOut {
+100% {opacity:1;}
+0% {opacity:0;}
+}
+
+@-o-keyframes fadeOut {
+
+100% {opacity:1;}
+0% {opacity:0;}
+}
+
+@-ms-keyframes fadeOut {
+
+100% {opacity:1;}
+0% {opacity:0;}
+} */
+}
+@media screen
+and (min-device-width: 320px)
+and (max-device-width: 420px) {
+
 body {
     background-color: black;
     font-family: American Typewriter, serif;
     display: grid;
-    grid-template-columns: 1fr 20% 40% 20% 1fr;
-    grid-template-rows: .25fr auto 3fr 5fr;
-    row-gap: 15px;
+    max-height: 100%;
+    max-width: 98vw;
+    grid-template-columns: 1fr 4fr 4fr 4fr 4fr 1fr;
+    grid-template-rows: .5fr 7.5fr 2fr 4fr 2fr;
+    row-gap: 1.5vh;
     column-gap: 10px;
     cursor: pointer;
     
@@ -16,23 +420,25 @@ body {
 .selected {
     /* make background height fit text, width static */
     background-size: auto;
-    background-color: rgba(138,130,112,.9);
+    
     border: 2px solid black;
     border-radius: .7em;
-    padding: 10px;
+    padding: 1vw;
     margin: 0 auto;
     text-align: center;
 }
 #user-view {
-    width: 100%;
-    height: 500px;
-    background-color: rgba(194,181,155,1);
+    position:sticky;
+    max-width: 100%;
+    max-height: 50%;
+    background-color: black;
+    color: rgba(194,181,155,1);
     font-family: American Typewriter, serif;
     margin: 0 auto;
     grid-row-start: 2;
     grid-row-end: 3;
     grid-column-start: 2;
-    grid-column-end: 5;
+    grid-column-end: 6;
     display: grid;
     grid-template-columns: 8% 7% 70% 8% 7%;
     grid-template-rows: 1fr 60% 1fr 20% 1fr;
@@ -42,8 +448,10 @@ body {
     font-family: American Typewriter, serif;
     background-color: black;
     color: rgba(194,181,155,1);
-    border-radius: .6em;
-    font-size: 25px;
+    border-radius: 0; 
+    font-size: 5vw;
+    padding: 10vw;
+    border: 0px;
     grid-row-start: 4;
     grid-row-end: 5;
     grid-column-start: 3;
@@ -53,8 +461,6 @@ body {
     background-color: black;
     color: rgba(194,181,155,1);
 }
-
-
 #book-modal {
     font-family: American Typewriter, serif;
     font-size: 23px;
@@ -64,9 +470,9 @@ body {
     justify-content: center;
     z-index: 1;
     visibility: hidden;
-    grid-row-start: 1;
-    grid-row-end: 6;
-    grid-column-start: 1;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    grid-column-start: 2;
     grid-column-end: 6;
     background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg');
     background-size: 100% 100%;
@@ -74,55 +480,95 @@ body {
     outline-offset: -10px;
     border: 5px solid black;
 }
-
+#provide-fixed {
+    position: fixed;
+    z-index: 1;
+}
+#closer-modal {
+    position: fixed;
+    background-color: black;
+    background-size: 100% 100%;
+    color: rgba(194,181,155,1);
+    z-index: 10;
+    height: 100%;
+    width: 80vw;
+    left: 10vw;
+    right: 10vw;
+    text-align: center;
+    position: relative;
+}
 #conversation-modal {
     font-family: American Typewriter, serif;
     background-color: black;
-    font-size: 23px;
-    padding: 10px;
-    text-align: center;
+    padding: 0px;
     display:grid;
     z-index: 1;
     visibility: hidden;
-    grid-row-start: 1;
+    grid-row-start: 2;
     grid-row-end: 6;
-    grid-column-start: 1;
+    grid-column-start: 2;
     grid-column-end: 6;
-    grid-template-columns: 5% 1fr 5% 1fr 5% 1fr 5%;
-    grid-template-rows: 10% 5fr 5% 2fr 5%;
+    grid-template-columns:10% 80% 10%;
+    grid-template-rows: 3% minmax(10px,40px) repeat(3, fit-content(15%)) 3%;
+    overflow-y: scroll;
+    
 }
+
 #conversation-modal > button {
     font-family: American Typewriter, serif;
     background: rgba(194,181,155,1);
     border-radius: .6em;
-    font-size: 25px;
+    padding: 0px 1px 2px 1px;
+    font-size: 2.5vw;
 }
-#npc-speech {
-    grid-row-start: 2;
-    grid-row-end: 3;
-    grid-column-start: 2;
-    grid-column-end: 7;
+#npc-speech {/*
+    place-self: center;
+    font-size: clamp(1.5vw, 2.8vw, 3vw);
+    text-align: center;
+    */
+    font-size: clamp(1.5vw, 2.8vw, 3vw);
+    width: 90%;
+    grid-row-start: 1;
+    grid-row-end: 4;
+    grid-column-start: 1;
+    grid-column-end: 4;
     background-color: black;
     color: rgba(194,181,155,.5);
+    overflow-y: scroll;     
+}
+#npc-speech > p {
+    overflow-y: scroll;
 }
 
+#closer-modal {
+    visibility: hidden;
+    font-family: American Typewriter, serif;
+    font-size: 2vh;
+    font-size: clamp(1.5vw, 2.8vw, 3vw);
+    color: rgba(194,181,155,.5);
+    background-color: black;
+    padding: 0px;
+    z-index: 1;
+    max-height: 80px;
+
+}
 #convo1 {
-    grid-row-start: 4;
-    grid-row-end: 5;
+    grid-row-start: 3;
+    grid-row-end: 4;
     grid-column-start: 2;
     grid-column-end: 3;
 }
 #convo2 {
     grid-row-start: 4;
     grid-row-end: 5;
-    grid-column-start: 4;
-    grid-column-end: 5;
+    grid-column-start: 2;
+    grid-column-end: 3;
 }
 #convo3 {
-    grid-row-start: 4;
-    grid-row-end: 5;
-    grid-column-start: 6;
-    grid-column-end: 7;
+    grid-row-start: 5;
+    grid-row-end: 6;
+    grid-column-start: 2;
+    grid-column-end: 3;
 }
 
 #conversation-modal > button:hover {
@@ -132,11 +578,11 @@ body {
 #room-entry-description {
     font-family: American Typewriter, serif;
     visibility: hidden;
-    font-size: 20px;
+    font-size: 3vw;
     grid-row-start: 2;
     grid-row-end: 3;
-    grid-column-start: 3;
-    grid-column-end: 4;
+    grid-column-start: 2;
+    grid-column-end: 5;
 }
 #room-entry-description:hover {
     cursor: grab;
@@ -145,28 +591,30 @@ body {
 #upon-action {
     visibility: hidden;
     font-family: American Typewriter, serif;
+    font-size: 2.5vw;
     grid-row-start: 4;
     grid-row-end: 5;
     grid-column-start: 2;
     grid-column-end: 5;
-    background-color: rgba(138,130,112,.9);
+    background-color: black;
 }
 .move-directions {
+    position: sticky;
     border: none;
     margin: 0 auto;
     display: grid;  
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr;
-    grid-row-gap:    10px;
-    grid-column-gap: 10px; 
+    grid-row-gap:    5px;
+    grid-column-gap: 5px; 
     grid-row-start: 3;
     grid-row-end: 4;
     grid-column-start: 2;
-    grid-column-end: 3;
+    grid-column-end: 4;
 }
 .move-directions > button {
     background-color:rgba(194,181,155,1);
-    font-size: 30px;
+    font-size: 4vw;
     font-family: American Typewriter, serif;
 }
 
@@ -198,17 +646,17 @@ body {
 .player-actions {
     grid-row-start: 3;
     grid-row-end: 4;
-    grid-column-start: 3;
-    grid-column-end: 4;
+    grid-column-start: 4;
+    grid-column-end: 6;
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-columns: 30% 40% 30%;
-    row-gap: 10px;
+    row-gap: 5px;
 }
 .player-actions > button {
     font-family: American Typewriter, serif;
     background: rgba(194,181,155,1);
-    font-size: 25px;
+    font-size: 3vw;
 }
 .player-actions > button:hover {
     background-color: black;
@@ -217,8 +665,6 @@ body {
 
 
 #do-action {
-    font-size: 16px;
-    text-align: center;
     grid-column-start: 1;
     grid-column-end: 4;
     grid-row-start: 1;
@@ -244,38 +690,53 @@ body {
 .player-inventory {
     font-family: American Typewriter, serif;
     grid-column-start: 4;
-    grid-column-end: 5;
-    grid-row-start: 3;
-    grid-row-end: 5;
+    grid-column-end: 6;
+    grid-row-start: 4;
+    grid-row-end: 6;
     display: grid;
-    grid-template-rows: 12% 1fr 10%;
-    grid-template-columns: 2;
+    grid-template-rows: 7% 1fr 10%;
+    grid-template-columns: 5% 90% 5%;
     align-items: start;
-    justify-items: center;
+    justify-items: start;
+    
     
 }
 .player-inventory > h2 {
+    text-align: center;
     font-family: American Typewriter, serif;
+    font-size: 4vw;
     color: rgba(194,181,155,1);
     margin: 0 auto;
+}
+.player-inventory > ul {
+    text-align: center;
+    justify-content: space-around;
+    display:grid;
+    display: block;
+    justify-content: space-around;
+    grid-template-rows: 7% 1fr 10%;
+    grid-template-columns: 5% 90% 5%;
+    overflow-y: auto;
 }
 #inventory-list {
     text-align: center;
     font-family: American Typewriter, serif;
-    display: grid;
-    row-gap: 10px;
+    row-gap: 1vh;
+    
 }
 .inventory-item-element {
+    grid-row-start: 2;
+    grid-row-end: 3;
     display: grid;
     grid-template-rows: 2;
     grid-template-columns: 2;
-    column-gap: 9px;
+    column-gap: 3vw;
     visibility: hidden;
 }
 .inventory-item-element > button {
     font-family: American Typewriter, serif;
     background: rgba(194,181,155,1);
-    font-size: 15px;
+    font-size: 3vw;
 }
 .inventory-item-element > button:hover {
     background-color: black;
@@ -283,6 +744,7 @@ body {
     cursor: grabbing;
 }
 .inventory-item-element > #item-name {
+    font-size: 3vw;
     grid-row-start: 1;
     grid-row-end: 2;
     grid-column-start: 1;
@@ -307,7 +769,7 @@ body {
 .get-item-style {
     font-family: American Typewriter, serif;
     display: inline;
-    font-size: 20px;
+    font-size: 3vw;
     color: black;
     transition-duration: .2s;
     text-emphasis: italic;
@@ -324,468 +786,11 @@ body {
 .gone-item-style {
     display: none;
 }
-.fade-in-text {
-    color: black;
-    animation: fadeIn linear 2.5s;
-    -webkit-animation: fadeIn linear 2.5s;
-    -moz-animation: fadeIn linear 2.5s;
-    -o-animation: fadeIn linear 2.5s;
-    -ms-animation: fadeIn linear 2.5s;
-  }
-  
-  @keyframes fadeIn {
-    0% {opacity:0;}
-    40% {opacity:1;}
-  }
-  
-  @-moz-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-  
-  @-webkit-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-  
-  @-o-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-  
-  @-ms-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-  }
-/* 
-  .fade-out-text {
-    color: black;
-    animation: fadeIn linear 2.5s;
-    -webkit-animation: fadeIn linear 2.5s;
-    -moz-animation: fadeIn linear 2.5s;
-    -o-animation: fadeIn linear 2.5s;
-    -ms-animation: fadeIn linear 2.5s;
-  }
-  
-  @keyframes fadeOut {
-    
-    40% {opacity:1;}
-    0% {opacity:0;}
-  }
-  
-  @-moz-keyframes fadeOut {
-    
-    100% {opacity:1;}
-    0% {opacity:0;}
-  }
-  
-  @-webkit-keyframes fadeOut {
-    100% {opacity:1;}
-    0% {opacity:0;}
-  }
-  
-  @-o-keyframes fadeOut {
-    
-    100% {opacity:1;}
-    0% {opacity:0;}
-  }
-  
-  @-ms-keyframes fadeOut {
-   
-    100% {opacity:1;}
-    0% {opacity:0;}
-  } */
+/*
+.hide {
+    visibility: hidden;
 }
-@media screen
- and (min-device-width: 320px)
- and (max-device-width: 420px) {
-    
-    body {
-        background-color: black;
-        font-family: American Typewriter, serif;
-        display: grid;
-        max-height: 100%;
-        max-width: 98vw;
-        grid-template-columns: 1fr 4fr 4fr 4fr 4fr 1fr;
-        grid-template-rows: .5fr 7.5fr 2fr 4fr 2fr;
-        row-gap: 1.5vh;
-        column-gap: 10px;
-        cursor: pointer;
-        
-    }
-    .selected {
-        /* make background height fit text, width static */
-        background-size: auto;
-        
-        border: 2px solid black;
-        border-radius: .7em;
-        padding: 1vw;
-        margin: 0 auto;
-        text-align: center;
-    }
-    #user-view {
-        position:sticky;
-        max-width: 100%;
-        max-height: 50%;
-        background-color: black;
-        color: rgba(194,181,155,1);
-        font-family: American Typewriter, serif;
-        margin: 0 auto;
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start: 2;
-        grid-column-end: 6;
-        display: grid;
-        grid-template-columns: 8% 7% 70% 8% 7%;
-        grid-template-rows: 1fr 60% 1fr 20% 1fr;
-    }
-    #start {
-        display: block;
-        font-family: American Typewriter, serif;
-        background-color: black;
-        color: rgba(194,181,155,1);
-        border-radius: 0; 
-        font-size: 5vw;
-        padding: 10vw;
-        border: 0px;
-        grid-row-start: 4;
-        grid-row-end: 5;
-        grid-column-start: 3;
-        grid-column-end: 4;
-    }
-    #start > button:hover {
-        background-color: black;
-        color: rgba(194,181,155,1);
-    }
-    #book-modal {
-        font-family: American Typewriter, serif;
-        font-size: 23px;
-        padding: 10px;
-        text-align: center;
-        display:grid;
-        justify-content: center;
-        z-index: 1;
-        visibility: hidden;
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start: 2;
-        grid-column-end: 6;
-        background-image: url('texture-old-faded-vintage-paper-beige-retro-background-grunge-paper-with-spots-streaks_213524-157.jpeg');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        outline-offset: -10px;
-        border: 5px solid black;
-    }
-    #provide-fixed {
-        position: fixed;
-        z-index: 1;
-    }
-    #closer-modal {
-        position: fixed;
-        background-color: black;
-        background-size: 100% 100%;
-        color: rgba(194,181,155,1);
-        z-index: 10;
-        height: 100%;
-        width: 80vw;
-        left: 10vw;
-        right: 10vw;
-        text-align: center;
-        position: relative;
-    }
-    #conversation-modal {
-        font-family: American Typewriter, serif;
-        background-color: black;
-        padding: 0px;
-        display:grid;
-        z-index: 1;
-        visibility: hidden;
-        grid-row-start: 2;
-        grid-row-end: 6;
-        grid-column-start: 2;
-        grid-column-end: 6;
-        grid-template-columns:10% 80% 10%;
-        grid-template-rows: 3% minmax(10px,40px) repeat(3, fit-content(15%)) 3%;
-        overflow-y: scroll;
-        
-    }
-    #conversation-modal > button {
-        font-family: American Typewriter, serif;
-        background: rgba(194,181,155,1);
-        border-radius: .6em;
-        padding: 0px 1px 2px 1px;
-        font-size: 2.5vw;
-    }
-    #npc-speech {/*
-        place-self: center;
-        font-size: clamp(1.5vw, 2.8vw, 3vw);
-        text-align: center;
-        */
-        font-size: clamp(1.5vw, 2.8vw, 3vw);
-        width: 90%;
-        grid-row-start: 1;
-        grid-row-end: 4;
-        grid-column-start: 1;
-        grid-column-end: 4;
-        background-color: black;
-        color: rgba(194,181,155,.5);
-        overflow-y: scroll;     
-    }
-    #npc-speech > p {
-        overflow-y: scroll;
-    }
+*/
 
-    #closer-modal {
-        visibility: hidden;
-        font-family: American Typewriter, serif;
-        font-size: 2vh;
-        font-size: clamp(1.5vw, 2.8vw, 3vw);
-        color: rgba(194,181,155,.5);
-        background-color: black;
-        padding: 0px;
-        z-index: 1;
-        max-height: 80px;
-
-    }
-    #convo1 {
-        grid-row-start: 3;
-        grid-row-end: 4;
-        grid-column-start: 2;
-        grid-column-end: 3;
-    }
-    #convo2 {
-        grid-row-start: 4;
-        grid-row-end: 5;
-        grid-column-start: 2;
-        grid-column-end: 3;
-    }
-    #convo3 {
-        grid-row-start: 5;
-        grid-row-end: 6;
-        grid-column-start: 2;
-        grid-column-end: 3;
-    }
-    
-    #conversation-modal > button:hover {
-        background-color: black;
-        color: rgba(194,181,155,1);
-    }
-    #room-entry-description {
-        font-family: American Typewriter, serif;
-        visibility: hidden;
-        font-size: 3vw;
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start: 2;
-        grid-column-end: 5;
-    }
-    #room-entry-description:hover {
-        cursor: grab;
-    }
-    
-    #upon-action {
-        visibility: hidden;
-        font-family: American Typewriter, serif;
-        font-size: 2.5vw;
-        grid-row-start: 4;
-        grid-row-end: 5;
-        grid-column-start: 2;
-        grid-column-end: 5;
-        background-color: black;
-    }
-    .move-directions {
-        position: sticky;
-        border: none;
-        margin: 0 auto;
-        display: grid;  
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr;
-        grid-row-gap:    5px;
-        grid-column-gap: 5px; 
-        grid-row-start: 3;
-        grid-row-end: 4;
-        grid-column-start: 2;
-        grid-column-end: 4;
-    }
-    .move-directions > button {
-        background-color:rgba(194,181,155,1);
-        font-size: 4vw;
-        font-family: American Typewriter, serif;
-    }
-    
-    #north {
-        grid-column-start: 2;
-        grid-column-end: 3;
-        grid-row-start: 1;
-        grid-row-end: 2;
-        
-    }
-    #east {
-        grid-column-start: 3 ;
-        grid-column-end: 4;
-        grid-row-start: 2;
-        grid-row-end: 3;
-    }
-    #south {
-        grid-column-start: 2 ;
-        grid-column-end: 3;
-        grid-row-start: 2;
-        grid-row-end: 3;
-    }
-    #west {
-        grid-column-start: 1 ;
-        grid-column-end: 2 ;
-        grid-row-start: 2;
-        grid-row-end: 3;
-    }
-    .player-actions {
-        grid-row-start: 3;
-        grid-row-end: 4;
-        grid-column-start: 4;
-        grid-column-end: 6;
-        display: grid;
-        grid-template-rows: 1fr 1fr;
-        grid-template-columns: 30% 40% 30%;
-        row-gap: 5px;
-    }
-    .player-actions > button {
-        font-family: American Typewriter, serif;
-        background: rgba(194,181,155,1);
-        font-size: 3vw;
-    }
-    .player-actions > button:hover {
-        background-color: black;
-        color: rgba(194,181,155,1);
-    }
-    
-    
-    #do-action {
-        grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start: 1;
-        grid-row-end: 2;
-        visibility: hidden;
-    }
-    #look {
-        grid-column-start: 2;
-        grid-column-end: 3;
-        grid-row-start: 2;
-        grid-row-end: 3;
-    }
-    #greet {
-        visibility: hidden;
-        z-index: + 1;
-        grid-column-start: 1;
-        grid-column-end: 4;
-        grid-row-start: 1;
-        grid-row-end: 2;
-            
-        
-    }
-    .player-inventory {
-        font-family: American Typewriter, serif;
-        grid-column-start: 4;
-        grid-column-end: 6;
-        grid-row-start: 4;
-        grid-row-end: 6;
-        display: grid;
-        grid-template-rows: 7% 1fr 10%;
-        grid-template-columns: 5% 90% 5%;
-        align-items: start;
-        justify-items: start;
-        
-        
-    }
-    .player-inventory > h2 {
-        text-align: center;
-        font-family: American Typewriter, serif;
-        font-size: 4vw;
-        color: rgba(194,181,155,1);
-        margin: 0 auto;
-    }
-    .player-inventory > ul {
-        text-align: center;
-        justify-content: space-around;
-        display:grid;
-        display: block;
-        justify-content: space-around;
-        grid-template-rows: 7% 1fr 10%;
-        grid-template-columns: 5% 90% 5%;
-        overflow-y: auto;
-    }
-    #inventory-list {
-        text-align: center;
-        font-family: American Typewriter, serif;
-        row-gap: 1vh;
-        
-    }
-    .inventory-item-element {
-        grid-row-start: 2;
-        grid-row-end: 3;
-        display: grid;
-        grid-template-rows: 2;
-        grid-template-columns: 2;
-        column-gap: 3vw;
-        visibility: hidden;
-    }
-    .inventory-item-element > button {
-        font-family: American Typewriter, serif;
-        background: rgba(194,181,155,1);
-        font-size: 3vw;
-    }
-    .inventory-item-element > button:hover {
-        background-color: black;
-        color: rgba(194,181,155,1);
-        cursor: grabbing;
-    }
-    .inventory-item-element > #item-name {
-        font-size: 3vw;
-        grid-row-start: 1;
-        grid-row-end: 2;
-        grid-column-start: 1;
-        grid-column-end: 3;
-        font-family: American Typewriter, serif;
-        color: rgba(194,181,155,1);
-        margin: 0 auto;
-    }
-    .inventory-item-element > #inspect {
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start: 1;
-        grid-column-end: 2;
-    }
-    .inventory-item-element > #equip {
-        grid-row-start: 2;
-        grid-row-end: 3;
-        grid-column-start: 2;
-        grid-column-end: 3;
-    }
-    
-    .get-item-style {
-        font-family: American Typewriter, serif;
-        display: inline;
-        font-size: 3vw;
-        color: black;
-        transition-duration: .2s;
-        text-emphasis: italic;
-        background-color: rgba(194,181,155,.5);
-        padding: 0px 10px 0px 8px;
-        border-radius: .3em;
-    }
-    
-    .get-item-style:hover {
-        background-color: black;
-        color: rgba(194,181,155,1);
-        cursor: grabbing;
-    }
-    .gone-item-style {
-        display: none;
-    }
-    /*
-    .hide {
-        visibility: hidden;
-    }
-    */
-    
 
 }
