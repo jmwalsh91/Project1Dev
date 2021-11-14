@@ -591,7 +591,7 @@ let openingDescribe = document.querySelector('#room-entry-description')
     }
 
 } */
-let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'you are laying supine on a vast plane', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry', 'everything that surrounds you has gone angular', 'and slowly dissolves into a recognizeable Victorian wallpaper, adorned with swirling arsenic peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
+let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'You are laying supine on a vast plane, staring upwards towards a sky without limit, a sky that seems to broach and exceed the horizon.', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry, seeming at once alien and comforting.', 'From below you, beneath the plane on which you lay, you hear a voice that sounds of a thousand split hooves:', `"Man proposes, God disposes" \n \n`, 'The sky above you slowly dissolves, as if in a bath of acid, into a recognizeable Victorian wallpaper, adorned with swirling arsenic peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
  function begin() {
     
    
@@ -600,8 +600,8 @@ let openingLibraryDescription = ['your dreams are filled with the sound of birds
    
         let count = 1
         let secondCount = 0 
-        let intId = setInterval(iterate,4000)
-        let secondIntId = setInterval(inIterate,4008)
+        let intId = setInterval(iterate,4996)
+        let secondIntId = setInterval(inIterate,5000)
         openingDescribe.innerText = openingLibraryDescription[0]
         openingDescribe.style.visibility = "visible"
         start.style.display = "none"
@@ -611,7 +611,7 @@ let openingLibraryDescription = ['your dreams are filled with the sound of birds
             secondCount += 1
             console.log('transition')
             openingDescribe.classList.add('fade-in-text')
-            if (count == 5) {
+            if (count == 6) {
                 clearInterval(secondIntId)
             }
         }
@@ -620,7 +620,7 @@ let openingLibraryDescription = ['your dreams are filled with the sound of birds
             openingDescribe.innerText = openingLibraryDescription[count]
             openingDescribe.classList.remove('fade-in-text')
             count += 1
-            if (count == 6) {
+            if (count == 7) {
                 showButtons()
                 clearInterval(intId)
             } 
