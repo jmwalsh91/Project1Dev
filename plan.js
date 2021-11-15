@@ -61,7 +61,7 @@ let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been 
 
 let outside = new Room (['south','west'], [], 'You won the game, to heck with looking for Elizabeth', 'win', this.roomCounter)
 let foyer = new Room (['west', 'south'], [], 'You hear a click as the lock disengages, and are surprised when the doorknob rotates with a complete absence of resistance. You briefly take your hand off the door to reconsider your options, but the heavy mahogony door swings open, as if by its own volition. To your surprise, the doorway opens into a dark foyer, the chandelier hanging lightless in the center of two grand staircases.', 'You see a door to the south which leaves this weird place')
-let grove = new Room (['south'], [], 'You get on your hands and knees and begin to crawl through the thicket, feeling the occasional rose-thorn trail across your skin. You find yourself in a dimly lit alcove of sorts, a thick mat of moss covering the spongey and pungent earth. Strange mutterings float from the far side of the alcove', 'You turn your head to investigate the source of the sound, scanning the shadows. ')
+let grove = new Room (['south'], [], 'Exiting the thicket tunnel, you are again able to get off your hands and knees, and, with your fingertips, examine the thin lacerations from the occasional rose-thorn that trailed across your skin during your crawl. You find yourself in a dimly lit alcove of sorts, a thick mat of moss covering the spongey and pungent earth. Strange mutterings float from the far side of the alcove', 'You turn your head to investigate the source of the sound, scanning the shadows. ')
 let garden = new Room (['south', 'north'], [pewterKey], 'You find yourself in a garden that can only be described as claustrophobic, despite the fact you are relieved to breath fresh air. The moon, though full, casts barely enough light to illuminate the cracked paving stones forming a path before you.', 'your eyes follow the path outward from your feet and into a dense thicket of neglected rose bushes, which appear to have consumed what was once a path. A small opening through the thicket, fit perhaps for a large dog or small deer, about waist-height, is the only exit aside from the southern door to the den. ')
 let den = new Room (['north', 'west'], [letterOpener], 'You make your way into what would normally be considered the coziest room in any domicile, the den. In this case, though, the sentiment that something is irredeemably amiss is inescapable, and you get the inclination that you should look for an exit', 'the great room is to your west through a heavy door sagging on its hinges, and there appears to be an exit to the outside to the north. ')
 let greatRoom = new Room (
@@ -74,13 +74,98 @@ let dining = new Room (['north', 'south', 'west'], [], 'You are in a large, wind
 let hallway = new Room (['north','south'], [], 'You find yourself in a long hallway. You are most aware of what must be the accumulation of centuries-worth of residue from tobacco smoke coating the peeling taupe wallpaper, and the lack of cushion the matted persian rug below your feet provides you', 'You notice several paintings of birds in cages, and there are exits to the north and south.')
 let library = new Room (['north'], [], 'A single hanging pendant light with stained-glass depictions of songbirds illuminates the sole wall not covered by bookshelves, its wallpaper featuring a repetition of peacocks, the ink of which, you surmise, is arsenic-based. ', `You feel as if you could stare at the wallpaper for hours`) 
 //could I keep this in a function in an array in gameState?
-    grove.adjacentRoom = {
+//garden expansion
+let garden2 = new Room (['east', 'south'], [], 'The thicket blocks out nearly all the light, and as your eyes adjust, you are able to see a one-foot-wide depression where something has been dragged, but no discernable exit. You could always turn back south.', 'Feeling around in the hummus of mostly-composted matter and soil, you recognize that the groove in the dirt where something has been dragged leads east.')
+let garden3 = new Room (['east', 'west'], [], 'Continuing on through the tunnel through the thicket, you feel somewhat relieved at the diminishing options. Committing fully, and calmly, to feeling out before you for the channel in the soil, you infer the path leads to the east', 'There is nothing more to see here, all around you is shadow.')
+let garden4 = new Room (['north', 'west'], [], 'You feel the path through the tunnel in the thicket curve, exits to the west and north.', 'You imagine, for a second, that you see the first signs of botanical life: a red rose about an arms-length into the bramble. Upon blinking, it disappears from your view.')
+let garden5 = new Room (['north', 'south'], [], 'You see light ahead, and the tunnel gradually increases in height to the north.', 'To the north, you are able to make out a moonlit clearing.')
+let gardenCenter = new Room (['north', 'east', 'south', 'west'], [], 'You find yourself in a moonlit clearing, the thicket all around towering a foot above your head. You can see the roof of the house to your east, with a walking path through the thicket. To your west, you see a hole large enough to climb down. To the north, the tunnel persists, with the indention that had guided your path continuing on in the same direction. Before the entrance to the tunnel thicket, there is a wooden sign with the words "Beware the Monarch of the Glen," gouged out by a hook knife.', 'The clearing has a variety of smashed stoneware and clay pottery, dark soil and evidence of dead root structures spilling out.')
+let gardenTowardsHouse = new Room (['east', 'west'], [], 'You are on the foot-path between the west wall of the house and the moonlit clearing. To the east, a large brownstone wall covered in vines. West towards the moonlit clearing', 'You are able to see windows on the second floor of the house, some appear to have lights on, but nothing perceptible moves within those rooms.')
+let gardenAlongWall = new Room (['north', 'south', 'west'], [], 'You are along the vine-covered brownstone wall, and your feet find firmer footing on mottled grey paving stones. Benches of stacked sedimentary rock meet the hedge wall at its boundary.', 'Curiousity compels you to search the windows for evidence of activity, but at this angle, nothing can be seen. Exits north, south, west.')
+let gardenTea = new Room (['north'], [], 'A tea garden with a brick retaining wall defining its limit, which appears to have been mostly successful at preventing the encroachment of the bramble. At one time, this would have been an extremely pleasant place to enjoy a cup.', 'You recognize a few living specimens of ornamental plants, the knowledge of which must have roots in your youth. Must have been tended to recently. Exit north. ')
+let gardenBeforeDoor = new Room (['south'], [], 'A stone patio before a great wooden gate that appears to lead to some sort of coach house. The gate has a massive, three-quarter-inch-thick chain spanning the length between two iron shackles fixed upon each side of the gate door.', 'A large, cast-iron padlock barres your entry north. Exit south.')
+let gardenIntoHole = new Room (['east', 'west'], [], 'On a steep slope, with adequate handholds, between the sound of running water and the clearing', 'You are able to see the glimmer of moonlight reflected off disturbed water to the west, and the moonlit clearing to the east')
+let gardenSpring = new Room (['east'], [], 'A yard-wide stream from a ground-fed spring courses over steppes of sedimentary rock, with a wood-shored wellhousing allowing the moonlight to trickle in above you. An iron grate on the downstream side of the spring prohibits entry, mirroring the situation on the upstream side to the north.  ', 'Human handprints, alongside cloven indentations, persist in the sandy soil before the stream. It appears the only exit is to the east.')
+let gardenTunnelThicket = new Room (['south', 'north'], [], 'Again on your hands and knees, you begin again to feel out your way through the thicket, periodically putting one or both hands before you and sweeping them atop the dirt to feel for the impression in the soil. Again, you feel possessed to press ownard, as your hand finds the indention leading north through the thicket', 'The tunnel darkens to the north, as the ever-so-slight amount of moonlight from the clearing to the south fails to reach it.')
+let gardenTunnel2 = new Room (['south', 'west'], [], 'You discern that the tunnel rounds a curve from south to west. From the west--you assume--you hear a clamor of snapping branches breaking the immense quiet of the garden, followed by a gutteral and plangent roar, the reverberations of which persist for some time', 'You pause to regain your bearings and listen for further sounds from the source of the disturbance, but hear nothing.')
+let gardenY = new Room (['north', 'east', 'west'], [], 'The depression in the earth that you had been following continues on to the west, where moonlight indicates a proximous clearing. The light from the west illuminates the two paths through the thicket which fall to your east and your north. ', 'Parallel shadows, like lengthy lines, are cast on the earth to your west, presumeably from a large gate or fence. The tunnel through the thicket continues north and east.')
+let gardenTunnel3 = new Room (['north', 'south'], [], 'The tunnel increases in magnitude on both axes, at once becoming taller and wider. You can not yet bring yourself to raise your head or move your back out of plane with the earth, but even this slight improvement allows you to breathe easier.', 'You are aware of some sort of clearing to the north, and the branching-off-point between three paths to the south')
+let gardenGate = new Room (['east'], [], 'You stand before a large, wrought-iron gate. The indention in the earth continues beneath and beyond the black-coated bars of the gate, vanishing into an impenetrable Scotch mist. The fog renders the moonlight diffuse, and the dead and woody foliage that surrounds you appears as if it were illuminated from various angles.', 'A feeling of insurmountable dread washes over you as you walk towards the gate, and you are compelled to head back east.')
+garden2.adjacentRoom = {
+        nextRoomDirection: ['east', 'south'],
+        nextRoom: [garden3, garden],
+},
+garden3.adjacentRoom = {
+        nextRoomDirection: ['east', 'west'],
+        nextRoom: [garden4, garden2],
+},
+garden4.adjacentRoom = {
+        nextRoomDirection: ['north', 'west'],
+        nextRoom: [garden5, garden3],
+},
+garden5.adjacentRoom = {
+        nextRoomDirection: ['north', 'south'],
+        nextRoom: [gardenCenter, garden4],
+},
+gardenCenter.adjacentRoom = {
+        nextRoomDirection: ['north', 'east', 'south', 'west'],
+        nextRoom: [gardenTunnelThicket, gardenTowardsHouse, garden5, gardenIntoHole],
+},
+gardenTowardsHouse.adjacentRoom = {
+        nextRoomDirection: ['east', 'west'],
+        nextRoom: [gardenAlongWall, gardenCenter],
+},
+gardenAlongWall.adjacentRoom = {
+        nextRoomDirection: ['north', 'south','west'],
+        nextRoom: [gardenBeforeDoor, gardenTea, gardenTowardsHouse],
+},
+gardenTea.adjacentRoom = {
+        nextRoomDirection: ['north'],
+        nextRoom: [gardenAlongWall],
+},
+gardenBeforeDoor.adjacentRoom = {
         nextRoomDirection: ['south'],
-        nextRoom: [garden],
+        nextRoom: [gardenAlongWall],
+},
+gardenIntoHole.adjacentRoom = {
+        nextRoomDirection: ['east', 'west'],
+        nextRoom: [gardenCenter, gardenSpring],
+},
+gardenSpring.adjacentRoom = {
+        nextRoomDirection: ['east'],
+        nextRoom: [gardenIntoHole],
+},
+gardenTunnelThicket.adjacentRoom = {
+        nextRoomDirection: ['north', 'south'],
+        nextRoom: [gardenTunnel2, gardenCenter],
+},
+gardenTunnel2.adjacentRoom = {
+        nextRoomDirection: ['south', 'west'],
+        nextRoom: [gardenTunnelThicket, gardenY],
+},
+gardenY.adjacentRoom = {
+        nextRoomDirection: ['north', 'east', 'west'],
+        nextRoom: [gardenTunnel3, gardenTunnel2, gardenGate],
+},
+gardenTunnel3.adjacentRoom = {
+        nextRoomDirection: ['north','south'],
+        nextRoom: [grove, gardenY],
+},
+gardenGate.adjacentRoom = {
+        nextRoomDirection: ['east'],
+        nextRoom: [gardenY],
+}
+
+console.log('garden expansion loaded')
+//end garden expansion    
+
+grove.adjacentRoom = {
+        nextRoomDirection: ['south'],
+        nextRoom: [gardenTunnel3],
     }
     garden.adjacentRoom = {
         nextRoomDirection: ['south','north'],
-        nextRoom: [den, grove],
+        nextRoom: [den, garden2],
     }
     den.adjacentRoom = {
         nextRoomDirection: ['north','west'],
@@ -591,7 +676,7 @@ let openingDescribe = document.querySelector('#room-entry-description')
     }
 
 } */
-let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'You are laying supine on a vast plane, staring upwards towards a sky without limit, a sky that seems to broach and exceed the horizon.', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry, seeming at once alien and comforting.', 'From below you, beneath the plane on which you lay, you hear a voice that sounds of a thousand split hooves:', `"Man proposes, God disposes" \n \n`, 'The sky above you slowly dissolves, as if in a bath of acid, into a recognizeable Victorian wallpaper, adorned with swirling arsenic peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
+let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'You are laying supine on a vast plane, staring upwards towards a sky without limit, a sky that seems to broach and exceed the horizon.', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry, seeming at once alien and comforting.', 'From below you, beneath the plane on which you lay, you hear a voice that sounds of a thousand split hooves:', `"Man proposes, God disposes" \n \n`, 'The sky above you slowly dissolves, as if in a bath of acid, into a recognizeable Victorian wallpaper, adorned with swirling arsenical peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
  function begin() {
     
    
