@@ -193,6 +193,7 @@ grove.adjacentRoom = {
     }
     let secretDoor = new Door ('a mahogony door', ' bounded on all sides by bookshelves', 'secretDoor', brassKey, foyer, 'east')
     let winDoor = new Door ('massive french door', 'which exits the house', 'winDoor')
+    
     library.state = {
         stateTwoDescribe: 'You have entered the library where you woke up. Curiously, the configuration of the room seems to have changed.',
         stateTwoDoor: secretDoor 
@@ -209,7 +210,6 @@ grove.adjacentRoom = {
 let gameState = {
     oldManBoolean: false,
     secretDoorState() {
-        console.log('secretdoorstate hit')
         library.roomExits.push('east')
         foyer.adjacentRoom = {
             nextRoomDirection: ['south', 'west'],
@@ -328,27 +328,25 @@ let oldManConversation = {
         conv3.setAttribute('data-disp', 'standoffish')
         conv1.addEventListener('click', () => {
             let disposition = conv1.getAttribute('data-disp')
-            this.placeCounter += 1;
-            this.playerCounter += 1;
-            console.log(this.placeCounter)
+            this.placeCounter += 1
+            this.playerCounter += 1
+            
             this.advanceConvo(disposition)
-            console.log(disposition)
+         
         })
         conv2.addEventListener('click', () => {
             let disposition = conv2.getAttribute('data-disp')
-            this.placeCounter += 1;
-            this.playerCounter += 1;
-            console.log(this.placeCounter)
+            this.placeCounter += 1
+            this.playerCounter += 1
+          
             this.advanceConvo(disposition)
-            console.log(disposition)
+       
         })
             conv3.addEventListener('click', () => {
             let disposition = conv3.getAttribute('data-disp')
-            this.placeCounter += 1;
-            this.playerCounter += 1;
-            console.log(this.placeCounter)
+            this.placeCounter += 1
+            this.playerCounter += 1
             this.advanceConvo(disposition)
-            console.log(disposition)
         })
     }
 }
@@ -361,24 +359,19 @@ let player = {
         let bookModal = document.querySelector('#book-modal')
         let actionButton = document.querySelector('button#do-action')
         if (bookModal.style.visibility === 'hidden'){
-        bookModal.innerHTML = player.equippedItem[0].bookText
-        bookModal.style.visibility = 'visible'
-        actionButton.innerHTML = `Close ${player.equippedItem[0].bookTitle}`
-        console.log('first if was hit')
-    } else if (bookModal.style.visibility === 'visible'){
-        bookModal.style.visibility = 'hidden'
-        actionButton.innerHTML = `Read ${player.equippedItem[0].bookTitle}`
-        console.log('else was hit')
-        } else {
-            console.log('no visibility style')
-        }
-    },
+            bookModal.innerHTML = player.equippedItem[0].bookText
+            bookModal.style.visibility = 'visible'
+            actionButton.innerHTML = `Close ${player.equippedItem[0].bookTitle}`
+                } else if (bookModal.style.visibility === 'visible'){
+                    bookModal.style.visibility = 'hidden'
+                    actionButton.innerHTML = `Read ${player.equippedItem[0].bookTitle}`
+                } 
+        },
     equipItem(item) {
         let playerInventory = player.inventory
         //let equippedArray = player.equippedItem
         let actionButton = document.querySelector('button#do-action')
         actionButton.removeEventListener('click', this.bookPopUp) 
-        console.log(item.itemName + 'before loop  ' + playerInventory )
         if (player.equippedItem.length === 1) {
             player.inventory.push(player.equippedItem[0])
             player.equippedItem.pop()
@@ -386,42 +379,36 @@ let player = {
             let removeFromInventory = this.inventory.findIndex(obj => obj === item)
             this.inventory.splice(removeFromInventory,1)
             //player.inventory.pop(item)
-            console.log('equip IF hit!')
             player.playerActionOption()
             return
         } else if (player.equippedItem.length === 0) {
-         console.log(item.itemName)
+      
          this.equippedItem.push(item)
          let removeFromInventory = this.inventory.findIndex(obj => obj === item)
          this.inventory.splice(removeFromInventory,1)
          player.playerActionOption()
          return
-         //console.log(this.inventory.findIndex('item'))
         }
         
     },
     playerActionOption() {
         let actionButton = document.querySelector('button#do-action')
-        //check i
-        if (this.equippedItem[0] instanceof Book === false) {
-            actionButton.innerHTML = `you have ${this.equippedItem[0].itemName} equipped.`
-            actionButton.style.visibility = "visible"
-            return
+            if (this.equippedItem[0] instanceof Book === false) {
+                actionButton.innerHTML = `you have ${this.equippedItem[0].itemName} equipped.`
+                actionButton.style.visibility = "visible"
+                return
             
         } else if (this.equippedItem[0] instanceof Book === true) {
             let bookModal = document.querySelector('#book-modal')
             actionButton.innerHTML = `Read ${this.equippedItem[0].bookTitle}`
             actionButton.style.visibility = "visible"
             bookModal.style.visibility = "hidden"
-            console.log(bookModal.style)
             actionButton.addEventListener('click', this.bookPopUp)
-            // doAction visible doAction innerText update doActionEventListenerClick [ refer to book] ReadBook()
         } else if ((this.equippedItem.length === 1) && (this.equippedItem instanceof Book === false)) {
             console.log(player.equippedItem)
         }
     },
     updateInventory(item) {
-        //console.log(document.querySelector('#item-name').innerHTML) 
             if (document.querySelector('#item-name').innerHTML === 'Item Name') {
                 let templateElement = (document.querySelector('li.inventory-item-element'));
                 let newInventoryElement = templateElement.cloneNode(true);
@@ -436,8 +423,6 @@ let player = {
                 nextInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
                 document.querySelector('li.inventory-item-element').after(nextInventoryElement);
                 nextInventoryElement.setAttribute('data-objectString', `${item.objString}`)
-                //document.querySelector('ul').append(nextInventoryElement)
-                
             }
             document.querySelector('ul').addEventListener('click', function(e){
                 let parent = e.target.parentNode
@@ -445,14 +430,13 @@ let player = {
                 if (e.target.innerHTML.includes('Inspect')) {
                     for (let i = 0; i < player.inventory.length; i++) {
                         if (player.inventory[i].objString === objStr) {
-                        uponAction.innerHTML = player.inventory[i].lookTarget
-                        uponAction.style.visibility = "visible"
-                        return
+                            uponAction.innerHTML = player.inventory[i].lookTarget
+                            uponAction.style.visibility = "visible"
+                            return
                         } 
                        
                     }           
                 } if (e.target.innerHTML.includes('Equip')) {
-                    console.log('includes equip')
                     for (let i = 0; i < player.inventory.length; i++) {
                         if (player.inventory[i].objString == objStr) {
                             item = player.inventory[i]
@@ -508,7 +492,6 @@ let player = {
                 }
                 if (player.currentLocation.hasDoor === true) {
                     let door = player.currentLocation.door
-                    console.log(door)
                     let getDoor = document.createElement('p')
                     getDoor.innerText = door.name
                     getDoor.classList.add('get-item-style')
@@ -543,15 +526,12 @@ let player = {
                         } 
                     }
                     getDoor.addEventListener('click', checkDoor)
-                    //getFirstItem.addEventListener('click', player.updateInventory) 
-                    //getDoor.addEventListener('click', restoreEntryText)
                 }
                  
             }
             changeRoom()
             describeRoom()
         } else {
-          console.log('figure something out here')
           let button = event.target
           let buttonInt = setInterval(wrongWay,500)
           let buttonCount = 0
@@ -572,7 +552,6 @@ let player = {
         let conversationModal = document.querySelector('#conversation-modal')
         conversationModal.style.visibility = "visible"
         uponAction.style.visibility = "hidden"
-        console.log(conversationModal)
         oldManConversation.initConvo()
         oldMan.talkCounter += 1
     },
@@ -584,7 +563,6 @@ let player = {
             greetButton.style.visibility = "visible"
             greetButton.textContent = `Greet the ${player.currentLocation.npc.name}`
             greetButton.addEventListener('click', this.startConversation)
-            console.log('function invoked')
         }
     },
     look() {
@@ -605,7 +583,6 @@ let player = {
                         textTarget.append(npcTarget.describeNpc)
                         npcText.addEventListener('click', function () {
                             player.npcGreetPrompt()
-                            console.log('click')
                         })
                     } npcOnLook()
                 }
@@ -641,12 +618,12 @@ westButton.addEventListener('click', function () {
 const lookButton = document.querySelector('#look')
 lookButton.addEventListener('click', player.look)
 let uponAction = document.querySelector('#upon-action')
-let buttonArray = [northButton, eastButton, southButton, westButton, lookButton]
+let inventoryHeader = document.querySelector('#inventory-heading')
+let buttonArray = [northButton, eastButton, southButton, westButton, lookButton, inventoryHeader]
 
 function hideButtons() {
     buttonArray.forEach((button) => {
         button.style.visibility = "hidden"
-        console.log(button)
     })
 }
 hideButtons()
@@ -654,7 +631,7 @@ hideButtons()
 function showButtons() {
     buttonArray.forEach((button) => {
         button.style.visibility = "visible"
-        console.log(button)
+
     })
 }
 
@@ -672,13 +649,6 @@ function showButtons() {
 //GETTERS
 //STATE.
 let start = document.querySelector('#start')
-
-/* northButton.style.visibility = "hidden"
-eastButton.style.visibility = "hidden"
-southButton.style.visibility = "hidden"
-westButton.style.visibility = "hidden"
- */
-
 let openingDescribe = document.querySelector('#room-entry-description')
 
 /* let textEvents = {
@@ -690,78 +660,31 @@ let openingDescribe = document.querySelector('#room-entry-description')
 let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'You are laying supine on a vast plane, staring upwards towards a sky without limit, a sky that seems to broach and exceed the horizon.', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry, seeming at once alien and comforting.', 'From below you, beneath the plane on which you lay, you hear a voice that sounds of a thousand split hooves:', `"Man proposes, God disposes" \n \n`, 'The sky above you slowly dissolves, as if in a bath of acid, into a recognizeable Victorian wallpaper, adorned with swirling arsenical peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
 function begin() {
     
-   
-    let openingDescribe = document.querySelector('#room-entry-description')
-    
-   
-        
+    let openingDescribe = document.querySelector('#room-entry-description')        
         openingDescribe.innerText = openingLibraryDescription[0]
         openingDescribe.style.visibility = "visible"
         start.style.display = "none"
         openingDescribe.classList.add('fade-in-text')
         openingDescribe.classList.add('event-text')
-        console.log('begin')
-
 
 let assign = 0
         let count = 1
         let secondCount = 0 
         let intId = setInterval(assignText,7000)    
-        //let secondInt = setInterval(iterate,5005)
-        if (count === 0) {
-           console.log('whaaat')
-            //setTimeout(iterate, 2500)
-        }
-        
         function assignText () {
-            console.log(openingLibraryDescription[count])
             openingDescribe.innerText = openingLibraryDescription[count]
             openingDescribe.style.opacity = 1
             assign = assign + 1
-            console.log('assign called' + assign)
             setTimeout(iterate,3450)
-
-       console.log(openingDescribe.style.opacity)
         }
-
-
-
         function iterate () {
-            console.log(count)
-       console.log(openingDescribe.style.opacity)
             if (count == 6) {
                 showButtons()
                 clearInterval(intId)
-                //clearInterval(secondInt)
-
-        } else { 
-            count++ 
-            console.log('iterate called' + ' ' + count)
-        openingDescribe.style.opacity = 0
-            
-        //assignText()
-       
-        
+            } else { 
+                count++ 
+                openingDescribe.style.opacity = 0 
         }
     }
 }
-/* 
-function begin() {
-    console.log('click')
-    let i = 0
-    let openingDescribe = document.querySelector('#room-entry-description')
-       
-    function slide() {
-        openingDescribe.innerText = openingLibraryDescription[i]
-        openingDescribe.style.opacity = 1;
-
-        setTimeout(next,2000)
-    }
-        function next() {
-            i++
-            openingDescribe.style.opacity = 0;
-            setTimeout(slide, 1000)
-        }
-    } */
-//click -> 
 start.addEventListener('click', begin) 
