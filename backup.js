@@ -1,3 +1,108 @@
+function begin() {
+    
+   
+    let openingDescribe = document.querySelector('#room-entry-description')
+    
+   
+        
+        openingDescribe.innerText = openingLibraryDescription[0]
+        openingDescribe.style.visibility = "visible"
+        start.style.display = "none"
+        openingDescribe.classList.add('fade-in-text')
+        openingDescribe.classList.add('event-text')
+    
+
+
+
+        let count = 1
+        let secondCount = 0 
+        let intId = setInterval(iterate,4000)
+        let secondIntId = setInterval(inIterate,4002)     
+        function inIterate () {
+            if (secondCount == 0){
+            //setTimeout(inIterate,0001) 
+            console.log('delay')}
+            secondCount += 1
+            console.log('transition')
+            openingDescribe.classList.add('fade-in-text')
+            /* openingDescribe.classList.remove('fade-in-text') */
+            if (count == 6) {
+                clearInterval(secondIntId)
+            }
+        }
+        function iterate () {
+            /* if (count == 1){
+                setTimeout(inIterate,0010)
+            console.log('delayIterate')} */
+            console.log('element')
+            openingDescribe.innerText = openingLibraryDescription[count]
+           /*  openingDescribe.classList.add('fade-in-text') */
+            openingDescribe.classList.remove('fade-in-text')
+            count += 1
+            if (count == 7) {
+                showButtons()
+                clearInterval(intId)
+            } 
+        }
+
+       
+        
+    }
+//
+
+
+let count = 1
+let secondCount = 0 
+let intId = setInterval(iterate,4000)    
+let i = 0
+
+function assignText () {
+    let i = 0
+    openingDescribe.innerHtml = openingLibraryDescription[i]
+    openingDescribe.style.opacity = 1
+    console.log('assign called')
+    setTimeout(iterate, 2000)
+}
+
+
+
+function iterate () {
+    
+    i++
+    console.log('iterate called')
+    openingDescribe.style.opacity = 0
+    setTimeout(assignText, 2000)
+
+}
+assignText()
+
+
+//
+    let count = 1
+    let secondCount = 0 
+    let intId = setInterval(iterate,4000)    
+    let i = 0
+    
+    function assignText () {
+        let i = 0
+        openingDescribe.innerHtml = openingLibraryDescription[i]
+        openingDescribe.style.opacity = 1
+        console.log('assign called')
+        setTimeout(iterate, 2000)
+    }
+
+
+
+    function iterate () {
+        
+        i++
+        console.log('iterate called')
+        openingDescribe.style.opacity = 0
+        setTimeout(assignText, 2000)
+
+    }
+    assignText()
+
 //trying to remove event listener and put the npc dismiss for talkcounter === 1
 look() {
     uponAction.style.visibility = "visible"

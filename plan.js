@@ -456,8 +456,6 @@ let player = {
                     for (let i = 0; i < player.inventory.length; i++) {
                         if (player.inventory[i].objString == objStr) {
                             item = player.inventory[i]
-                            console.log('item in equip loop' + ' ' +item.objString)
-                            console.log('objStr in loop' + ' ' + objStr)
                             player.equipItem(item)
                             return   
                         }
@@ -469,7 +467,6 @@ let player = {
     getItem(item) {
         player.inventory.push(item)
         player.currentLocation.roomItems.pop(item)
-        console.log(player.inventory)
     },  
     move(direction) {
         gameState.updateMap()
@@ -528,18 +525,18 @@ let player = {
                                 if (player.equippedItem[0] === door.requires){
                                     function unlockDoor() {
                                         uponAction.innerText = "You can now enter the room to the east, this should be applicable to more than one door"
+                                        uponAction.style.visibility = "visible"
                                         gameState.secretDoorState()
                                         //this ^ should use objstring-string functionality to be useable for more than one door
                                         if (player.equippedItem.length == 1) {
                                             player.playerActionOption()
-                                        } else if (player.equippedItem == 0) {
+                                        } else if (player.equippedItem.length == 0) {
                                             actionButton.style.visibility = "hidden"
                                         }
                                     }
                                     actionButton.addEventListener('click', unlockDoor)
                                 }
                         } else { 
-                            console.log(requiresVar)
                             uponAction.innerText = `You jiggle the doorknob, but it is locked. You feel a cool breeze from the jamb-side of the door. Equip ${requiresVar.itemName} to unlock.` 
                             uponAction.style.visibility = "visible"
                         
@@ -554,7 +551,21 @@ let player = {
             changeRoom()
             describeRoom()
         } else {
-            console.log('you cannot go that way')
+          console.log('figure something out here')
+          let button = event.target
+          let buttonInt = setInterval(wrongWay,500)
+          let buttonCount = 0
+          button.style.background = "rgba(171,11,0,1)"
+          function wrongWay() {
+              buttonCount += 1
+              if (buttonCount == 3) {
+                button.style.background = "rgba(194,181,155,1)"
+                clearInterval(buttonInt)
+              }
+              
+
+          }
+          wrongWay()
         }
     },
     startConversation () {
@@ -677,42 +688,80 @@ let openingDescribe = document.querySelector('#room-entry-description')
 
 } */
 let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'You are laying supine on a vast plane, staring upwards towards a sky without limit, a sky that seems to broach and exceed the horizon.', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry, seeming at once alien and comforting.', 'From below you, beneath the plane on which you lay, you hear a voice that sounds of a thousand split hooves:', `"Man proposes, God disposes" \n \n`, 'The sky above you slowly dissolves, as if in a bath of acid, into a recognizeable Victorian wallpaper, adorned with swirling arsenical peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
- function begin() {
+function begin() {
     
    
     let openingDescribe = document.querySelector('#room-entry-description')
     
    
-        let count = 1
-        let secondCount = 0 
-        let intId = setInterval(iterate,4996)
-        let secondIntId = setInterval(inIterate,5000)
+        
         openingDescribe.innerText = openingLibraryDescription[0]
         openingDescribe.style.visibility = "visible"
         start.style.display = "none"
         openingDescribe.classList.add('fade-in-text')
         openingDescribe.classList.add('event-text')
-        function inIterate () {
-            secondCount += 1
-            console.log('transition')
-            openingDescribe.classList.add('fade-in-text')
-            if (count == 6) {
-                clearInterval(secondIntId)
-            }
+        console.log('begin')
+
+
+let assign = 0
+        let count = 1
+        let secondCount = 0 
+        let intId = setInterval(assignText,7000)    
+        //let secondInt = setInterval(iterate,5005)
+        if (count === 0) {
+           console.log('whaaat')
+            //setTimeout(iterate, 2500)
         }
-        function iterate () {
-            console.log('element')
+        
+        function assignText () {
+            console.log(openingLibraryDescription[count])
             openingDescribe.innerText = openingLibraryDescription[count]
-            openingDescribe.classList.remove('fade-in-text')
-            count += 1
-            if (count == 7) {
-                showButtons()
-                clearInterval(intId)
-            } 
+            openingDescribe.style.opacity = 1
+            assign = assign + 1
+            console.log('assign called' + assign)
+            setTimeout(iterate,3450)
+
+       console.log(openingDescribe.style.opacity)
         }
 
+
+
+        function iterate () {
+            console.log(count)
+       console.log(openingDescribe.style.opacity)
+            if (count == 6) {
+                showButtons()
+                clearInterval(intId)
+                //clearInterval(secondInt)
+
+        } else { 
+            count++ 
+            console.log('iterate called' + ' ' + count)
+        openingDescribe.style.opacity = 0
+            
+        //assignText()
        
         
+        }
     }
+}
+/* 
+function begin() {
+    console.log('click')
+    let i = 0
+    let openingDescribe = document.querySelector('#room-entry-description')
+       
+    function slide() {
+        openingDescribe.innerText = openingLibraryDescription[i]
+        openingDescribe.style.opacity = 1;
+
+        setTimeout(next,2000)
+    }
+        function next() {
+            i++
+            openingDescribe.style.opacity = 0;
+            setTimeout(slide, 1000)
+        }
+    } */
 //click -> 
 start.addEventListener('click', begin) 
