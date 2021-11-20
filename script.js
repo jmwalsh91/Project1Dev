@@ -221,10 +221,7 @@ let gameState = {
             library.roomDescription = library.state.stateTwoDescribe
             library.hasDoor = true
             library.door = secretDoor
-            //library.roomExits.push('east')
-            
             grove.roomDescription = grove.state.stateTwoDescribe
-            
         } else {
             console.log('state one')
         }
@@ -288,8 +285,6 @@ let oldManConversation = {
                         actionButton.style.visibility = "hidden"
                     }
                     gameState.oldManState()
-                    //uponAction.style.visibility = "visible"
-                    //Why is this not needed ^ ? 
                     actionButton.removeEventListener('click', restoreAndUpdate)
                 }
                 actionButton.addEventListener('click', restoreAndUpdate)
@@ -463,7 +458,6 @@ let player = {
                     getFirstItem.innerText = player.currentLocation.roomItems[0].itemName
                     getFirstItem.classList.add('get-item-style')
                     entryText.innerHTML = player.currentLocation.roomDescription + `<br><br>You see `
-                    //`${getFirstItem}` + `${firstItem.where}`
                     entryText.append(getFirstItem)
                     entryText.append(firstItem.where)
                     getFirstItem.addEventListener('click', function () {
@@ -624,28 +618,11 @@ function showButtons() {
     })
 }
 
-//UPDATE AND MAKE VISIBLE PLAYER-ACTION
-//TWO STATES FOR ITEMS WITHOUT CLASS 'BOOK'
-// GRAYED OUT, 'ITEMNAME EQUIPPED'
-//IF PLAYER.CURRENTLOCATION.HASITEM === PLAYER.EQUIPPEDITEM[0].useOn
-///light up player action update text addeventlistener click useItem
-//IF OBJECT HAS CLASS BOOK, DISPLAY READ, ADDEVENTLISTENER CLICK READBOOK()
 
-
-
-//const library = new Room (['north'], [tvGuide], `you awake in a dusty library. How did I get here?`, `in this room there are ${this.roomItems[0]}, and there is an exit to the ${this.roomExits[0]}`)
-
-//GETTERS
-//STATE.
 let start = document.querySelector('#start')
 let openingDescribe = document.querySelector('#room-entry-description')
 
-/* let textEvents = {
-    opening = {
-        libraryDescription = []
-    }
 
-} */
 let openingLibraryDescription = ['your dreams are filled with the sound of birds', 'You are laying supine on a vast plane, staring upwards towards a sky without limit, a sky that seems to broach and exceed the horizon.', 'the shapes of the clouds that float before your eyes seem defined by a strange geometry, seeming at once alien and comforting.', 'From below you, beneath the plane on which you lay, you hear a voice that sounds of a thousand split hooves:', `"Man proposes, God disposes" \n \n`, 'The sky above you slowly dissolves, as if in a bath of acid, into a recognizeable Victorian wallpaper, adorned with swirling arsenical peacocks.', 'you awake in a library, with a door to the north, and the walls to your left and right filled corner-to-corner with shelves overflowing with unfamiliar books.']
 function begin() {
     
