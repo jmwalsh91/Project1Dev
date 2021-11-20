@@ -2,9 +2,9 @@ class Room {
     constructor(roomExits, roomItems, roomDescription, lookTarget, roomCounter, hasDoor, door) {
     this.roomExits = roomExits,
     this.roomItems = roomItems,
-    this.roomDescription = roomDescription;
-    this.lookTarget = lookTarget;
-    this.roomCounter = 0;
+    this.roomDescription = roomDescription,
+    this.lookTarget = lookTarget,
+    this.roomCounter = 0,
     this.hasDoor = hasDoor,
     this.door = door
     }
@@ -14,7 +14,7 @@ class Items {
     this.itemName = itemName,
     this.lookTarget = lookTarget,
     this.objString = objString
-    this.where = where;
+    this.where = where,
     }
 }
 class Book extends Items {
@@ -49,8 +49,8 @@ class Npc {
 
 let brassKey = new Items ('a patinated brass key', 'An old brass key, the air has done violence to its chemistry','brassKey', 'Does this ever come up? Will it be referenced?')
 let oldMan = new Npc ('old man ', 'look', 'There is an ', 'hunched over, knees and palms in the peaty soil. He raises his head to look at you and you can see the stubbly remnants of black-grey beard', [brassKey], 0, 'looks agitated by your continued stay in his presence and motions you away')
-let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 'dustyBook', 'laying haphazard on the ground', 1, `"Journal of Albion Moonlight"` ,`My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`);
-let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...', 'letterOpener', 'glimmering on a dusty side-table');
+let dustyBook = new Book ('a dusty book', 'the front cover has been torn off, and the ink has faded', 'dustyBook', 'laying haphazard on the ground', 1, `"Journal of Albion Moonlight"` ,`My lovers are like rats in a well: behold, they put their hands to me, whimpering . . . The human winter is upon the earth, youth and love lie rotting on these terrible fields. Death walks upon the seas; the time of singing is done, and the voice of the vulture is heard through the land. The war-tree putteth forth her sour fruit, and the barbed wire with its mangled flesh gives out a horrible stench. Get up, poor dubs, take thy souls away—what have men to do with souls! Thou art in the mud of the trenches, in the vomit where the heroes lie—did you like the speeches? was there one orator better than the others? Turn on the searchlights, let us see the vines of barbed wire again: what wine will be made from these pitiful grapes!`)
+let letterOpener = new Items('an unreasonably sharp letter opener', 'this thing could draw blood...', 'letterOpener', 'glimmering on a dusty side-table')
 let pewterKey = new Items('a pewter key', 'Shoddy craftsmanship--must have been made to mimic a key that is now lost', 'pewterKey', 'jutting out of the night-black peat of the gardenbed')
 let outside = new Room (['south','west'], [], 'You won the game, to heck with looking for Elizabeth', 'win', this.roomCounter)
 let foyer = new Room (['west', 'south'], [], 'You hear a click as the lock disengages, and are surprised when the doorknob rotates with a complete absence of resistance. You briefly take your hand off the door to reconsider your options, but the heavy mahogony door swings open, as if by its own volition. To your surprise, the doorway opens into a dark foyer, the chandelier hanging lightless in the center of two grand staircases.', 'You see a door to the south which leaves this weird place')
@@ -192,8 +192,8 @@ grove.adjacentRoom = {
     }
 
   
-    grove.hasNpc = true;
-    grove.npc = oldMan;
+    grove.hasNpc = true
+    grove.npc = oldMan
   
 
 let gameState = {
@@ -399,18 +399,18 @@ let player = {
     },
     updateInventory(item) {
             if (document.querySelector('#item-name').innerHTML === 'Item Name') {
-                let templateElement = (document.querySelector('li.inventory-item-element'));
-                let newInventoryElement = templateElement.cloneNode(true);
+                let templateElement = (document.querySelector('li.inventory-item-element'))
+                let newInventoryElement = templateElement.cloneNode(true)
                 newInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
                 newInventoryElement.setAttribute('data-objectString', `${item.objString}`)
-                templateElement.replaceWith(newInventoryElement);
-                newInventoryElement.style.visibility = "visible";
+                templateElement.replaceWith(newInventoryElement)
+                newInventoryElement.style.visibility = "visible"
       
             } else {
                 let nextInventoryElement = document.querySelector('li.inventory-item-element').cloneNode(true)
                 //can't inspect an element once while it is equipped, because it is no longer in inventory. Might as well remove the .li too?
                 nextInventoryElement.querySelector('#item-name').innerText = `${item.itemName}`
-                document.querySelector('li.inventory-item-element').after(nextInventoryElement);
+                document.querySelector('li.inventory-item-element').after(nextInventoryElement)
                 nextInventoryElement.setAttribute('data-objectString', `${item.objString}`)
             }
             document.querySelector('ul').addEventListener('click', function(e){
@@ -445,7 +445,7 @@ let player = {
         gameState.updateMap()
         if (player.currentLocation.roomExits.includes(direction)) {
             function changeRoom() {
-                let dirArr = player.currentLocation.adjacentRoom.nextRoomDirection;
+                let dirArr = player.currentLocation.adjacentRoom.nextRoomDirection
                 let arrIn = dirArr.indexOf(direction)
                 player.currentLocation = player.currentLocation.adjacentRoom.nextRoom[arrIn]
             }
@@ -460,7 +460,7 @@ let player = {
                 if (player.currentLocation.roomItems.length > 0 && player.currentLocation.roomItems.length < 2 ) {
                     let firstItem = player.currentLocation.roomItems[0]
                     let getFirstItem = document.createElement('p')
-                    getFirstItem.innerText = player.currentLocation.roomItems[0].itemName;
+                    getFirstItem.innerText = player.currentLocation.roomItems[0].itemName
                     getFirstItem.classList.add('get-item-style')
                     entryText.innerHTML = player.currentLocation.roomDescription + `<br><br>You see `
                     //`${getFirstItem}` + `${firstItem.where}`
