@@ -1,5 +1,7 @@
 # Project1Dev
-repository for HTML/CSS/JS + related to browser game dev
+Game: https://jmwalsh91.github.io/Project1Dev/index.html
+
+Repo: https://github.com/jmwalsh91/Project1Dev
 
 Inspiration & Intent
 ========================
@@ -33,7 +35,7 @@ In line with the outline of the map above, the current gameplay, from start to f
 
 Instructions
 ====================
-1: Clone this repo into a directory of your choosing on your computer
+1: Clone this repo into a directory of your choosing on your computer. Source: https://github.com/jmwalsh91/Project1Dev
 2: Open the index.html file (in Chrome or Firefox :p )
 
 Gameplay Screenshots
