@@ -798,5 +798,9 @@ body {
 }
 */
 
-
+.fade-in-text {
+    color: rgba(194,181,155,.5);
+    opacity: 0;
+    transition: opacity 3.5s ease-in;
+}
 }

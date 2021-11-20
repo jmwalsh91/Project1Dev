@@ -13,8 +13,8 @@ class Items {
     constructor(itemName, lookTarget, objString, where) {
     this.itemName = itemName,
     this.lookTarget = lookTarget,
-    this.objString = objString
-    this.where = where,
+    this.objString = objString,
+    this.where = where
     }
 }
 class Book extends Items {
